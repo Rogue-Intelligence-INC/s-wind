@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{VRAM Optimization: KV Cache Paging and Compression Strategies}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 32,768 configurations for vram optimization: kv cache paging and compression strategies. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize effective batch size subject to VRAM < 80GB
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Base KV size & $B, L, d, n$ & $M_base = 2BLdn×2$ & FP16 & Full precision\\\hline
+2 & Quantized size & $M_base, Q$ & $M_q = M_base×Q/16$ & Quantization & Bit reduction\\\hline
+3 & Paging overhead & $P_size, N_pages$ & $M_oh = N_pages×8$ & Metadata & Page tables\\\hline
+4 & Total KV memory & $M_q, M_oh, r_c$ & $M_kv = (M_q + M_oh)×r_c$ & Compression & Additional compression\\\hline
+5 & Available for batch & $M_total, M_model$ & $M_avail = M_total - M_model$ & Subtraction & Remaining VRAM\\\hline
+6 & Max batch size & $M_avail, M_kv/B$ & $B_max = M_avail/(M_kv/B)$ & Division & Batch capacity\\\hline
+7 & Effective batch & $B_max, η_acc$ & $B_eff = B_max × η_acc$ & Quality & Accounting for accuracy loss\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 53.5500
+
+\end{document}

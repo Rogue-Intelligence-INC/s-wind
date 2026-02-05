@@ -1,0 +1,77 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Universal Basic Income Parameter Optimization}
+
+\author{S-wind Research Team}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present a systematic exhaustive search methodology for universal basic income parameter optimization. Our framework evaluates 830,544 discrete parameter combinations across 6 design variables. The optimization objective is to maximize poverty elimination rate subject to fiscal sustainability. Through rigorous constraint verification, we identify the optimal configuration that satisfies all declared constraints.
+\end{abstract}
+
+\textbf{Keywords:} universal basic income, UBI, poverty, fiscal policy, welfare economics
+
+\section{Introduction}
+
+The social policy domain presents significant optimization challenges. This paper presents a systematic approach through exhaustive parameter space search.
+
+\section{Problem Formulation}
+
+\textbf{Objective:} Maximize poverty elimination rate subject to fiscal sustainability
+
+\subsection{Design Variables}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+Parameter & Symbol & Range & Step & Unit \\
+\hline
+UBI Amount & $U$ & 500.00--3000.00 & 100.000 & $/month \\
+Minimum Age & $A_min$ & 0.00--25.00 & 5.000 & years \\
+Asset Test Threshold & $W_max$ & 0.00--100.00 & 10.000 & k$ \\
+Work Linkage & $r_work$ & 0.00--1.00 & 0.100 &  \\
+Phase-out Rate & $τ$ & 0.00--0.50 & 0.050 &  \\
+Inflation Adjustment & $f_adj$ & 1.00--4.00 & 1.000 & /year \\
+\hline
+\end{tabular}
+\end{center}
+
+Total search space: 830,544 configurations.
+
+\section{Results}
+
+\subsection{Optimal Configuration}
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+Parameter & Symbol & Optimal Value \\
+\hline
+UBI Amount & $U$ & 500.0000 \\
+Minimum Age & $A_min$ & 20.0000 \\
+Asset Test Threshold & $W_max$ & 0.0000 \\
+Work Linkage & $r_work$ & 0.5000 \\
+Phase-out Rate & $τ$ & 0.4000 \\
+Inflation Adjustment & $f_adj$ & 1.0000 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Objective Value:} 86.9833
+
+\section{Conclusion}
+
+Through exhaustive search of 830,544 configurations, we identified the optimal solution with objective value 86.9833. All constraints are satisfied.
+
+\end{document}

@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-01-26 00:24:13 UTC",
+  "domains": [
+    {
+      "name": "physics",
+      "problems": [
+        { "id": "P1", "formula": "α⁻¹ = D⁴ - 2D³ + 2D + 1", "desc": "Fine structure constant from dimension" },
+        { "id": "P2", "formula": "s[n+1] = D·s[n] - (3D² - 2)", "desc": "Scale hierarchy recurrence" },
+        { "id": "P3", "formula": "S_BH = k_B·A / (4·l_P²)", "desc": "Bekenstein-Hawking entropy" },
+        { "id": "P4", "formula": "T_H = ℏc³ / (8πGMk_B)", "desc": "Hawking temperature" },
+        { "id": "P5", "formula": "ρ_QFT / ρ_obs = 10^122", "desc": "Vacuum energy discrepancy" }
+      ]
+    },
+    {
+      "name": "chemistry",
+      "problems": [
+        { "id": "C1", "formula": "k = A·exp(-Ea/RT)", "desc": "Arrhenius activation" },
+        { "id": "C2", "formula": "ΔG = ΔH - TΔS", "desc": "Gibbs free energy" },
+        { "id": "C3", "formula": "E = E° - (RT/nF)·ln(Q)", "desc": "Nernst equation" },
+        { "id": "C4", "formula": "pH = -log[H⁺]", "desc": "pH calculation" },
+        { "id": "C5", "formula": "PV = nRT", "desc": "Ideal gas law" }
+      ]
+    },
+    {
+      "name": "aerospace",
+      "problems": [
+        { "id": "A1", "formula": "L = ½ρV²SC_L", "desc": "Lift equation" },
+        { "id": "A2", "formula": "C_D = C_D0 + C_L²/(πeAR)", "desc": "Drag polar" },
+        { "id": "A3", "formula": "V_s = √(2W/(ρSC_Lmax))", "desc": "Stall speed" },
+        { "id": "A4", "formula": "R = (V/c)(L/D)·ln(W1/W2)", "desc": "Breguet range" },
+        { "id": "A5", "formula": "ΔV = I_sp·g₀·ln(m0/mf)", "desc": "Tsiolkovsky rocket" }
+      ]
+    },
+    {
+      "name": "automotive",
+      "problems": [
+        { "id": "V1", "formula": "F = D·sin(C·arctan(Bα - E(Bα - arctan(Bα))))", "desc": "Pacejka magic formula" },
+        { "id": "V2", "formula": "K = Wf/Cαf - Wr/Cαr", "desc": "Understeer gradient" },
+        { "id": "V3", "formula": "d = V²/(2μg)", "desc": "Braking distance" },
+        { "id": "V4", "formula": "F_road = mgf_r + ½ρC_DAV²", "desc": "Road load" },
+        { "id": "V5", "formula": "HIC = max[(t2-t1)(∫a dt)^2.5]", "desc": "Head injury criterion" }
+      ]
+    },
+    {
+      "name": "finance",
+      "problems": [
+        { "id": "F1", "formula": "C = SN(d1) - Ke^(-rT)N(d2)", "desc": "Black-Scholes call" },
+        { "id": "F2", "formula": "E[Ri] = rf + βi(E[Rm] - rf)", "desc": "CAPM" },
+        { "id": "F3", "formula": "SR = (E[Rp] - rf) / σp", "desc": "Sharpe ratio" },
+        { "id": "F4", "formula": "D = Σ(t·PV(CFt)) / P", "desc": "Macaulay duration" },
+        { "id": "F5", "formula": "VaR_α = μ + z_α·σ", "desc": "Parametric VaR" }
+      ]
+    },
+    {
+      "name": "manufacturing",
+      "problems": [
+        { "id": "M1", "formula": "Cp = (USL - LSL) / 6σ", "desc": "Process capability" },
+        { "id": "M2", "formula": "VT^n = C", "desc": "Taylor tool life" },
+        { "id": "M3", "formula": "Rt = f² / 8r", "desc": "Theoretical roughness" },
+        { "id": "M4", "formula": "T_total = √(ΣTi²)", "desc": "RSS tolerance stack" },
+        { "id": "M5", "formula": "UCL = X̄ + 3R̄/d2", "desc": "Control chart limits" }
+      ]
+    },
+    {
+      "name": "electronics",
+      "problems": [
+        { "id": "E1", "formula": "Z0 ≈ 87/√(εr+1.41)·ln(5.98h/(0.8w+t))", "desc": "Microstrip impedance" },
+        { "id": "E2", "formula": "Γ = (ZL - Z0) / (ZL + Z0)", "desc": "Reflection coefficient" },
+        { "id": "E3", "formula": "f0 = 1 / (2π√LC)", "desc": "LC resonance" },
+        { "id": "E4", "formula": "δ = √(2ρ/ωμ)", "desc": "Skin depth" },
+        { "id": "E5", "formula": "TJ = TA + PD·θJA", "desc": "Junction temperature" }
+      ]
+    }
+  ]
+}

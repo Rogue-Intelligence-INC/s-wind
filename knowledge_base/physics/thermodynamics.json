@@ -1,0 +1,47 @@
+{
+  "domain": "Thermodynamics",
+  "formulas": [
+    {
+      "id": "IDEAL_GAS",
+      "name": "Ideal Gas Law",
+      "latex": "PV = nRT",
+      "variables": {"P": "Pressure (Pa)", "V": "Volume (m³)", "n": "Moles", "R": "8.314 J/(mol·K)", "T": "Temperature (K)"},
+      "source": "Clapeyron, 1834"
+    },
+    {
+      "id": "CARNOT",
+      "name": "Carnot Efficiency",
+      "latex": "\\eta_C = 1 - \\frac{T_L}{T_H}",
+      "variables": {"η_C": "Efficiency", "T_L": "Cold reservoir (K)", "T_H": "Hot reservoir (K)"},
+      "source": "Carnot, 1824"
+    },
+    {
+      "id": "ENTROPY",
+      "name": "Entropy Change",
+      "latex": "\\Delta S = \\int \\frac{dQ}{T}",
+      "variables": {"ΔS": "Entropy change (J/K)", "Q": "Heat (J)", "T": "Temperature (K)"},
+      "source": "Clausius, 1865"
+    },
+    {
+      "id": "FOURIER",
+      "name": "Fourier Heat Conduction",
+      "latex": "q = -k\\nabla T",
+      "variables": {"q": "Heat flux (W/m²)", "k": "Conductivity (W/m·K)", "∇T": "Temperature gradient"},
+      "source": "Fourier, 1822"
+    },
+    {
+      "id": "STEFAN_BOLTZMANN",
+      "name": "Stefan-Boltzmann Law",
+      "latex": "P = \\varepsilon\\sigma A T^4",
+      "variables": {"P": "Radiated power (W)", "ε": "Emissivity", "σ": "5.67×10⁻⁸ W/m²K⁴", "A": "Area (m²)"},
+      "source": "Stefan, 1879; Boltzmann, 1884"
+    },
+    {
+      "id": "NUSSELT",
+      "name": "Nusselt Number",
+      "latex": "Nu = \\frac{hL}{k}",
+      "variables": {"Nu": "Nusselt number", "h": "Heat transfer coeff", "L": "Characteristic length", "k": "Conductivity"},
+      "source": "Nusselt, 1915"
+    }
+  ]
+}

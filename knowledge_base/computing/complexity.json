@@ -1,0 +1,47 @@
+{
+  "domain": "Computational Complexity",
+  "formulas": [
+    {
+      "id": "AMDAHL",
+      "name": "Amdahl's Law",
+      "latex": "S=\\frac{1}{(1-p)+\\frac{p}{n}}",
+      "variables": {"S": "Speedup", "p": "Parallel fraction", "n": "Number of processors"},
+      "source": "Amdahl, 1967"
+    },
+    {
+      "id": "GUSTAFSON",
+      "name": "Gustafson's Law",
+      "latex": "S(n)=n-(1-p)(n-1)",
+      "variables": {"S": "Scaled speedup", "n": "Processors", "p": "Parallel fraction"},
+      "source": "Gustafson, 1988"
+    },
+    {
+      "id": "LITTLES_LAW",
+      "name": "Little's Law",
+      "latex": "L=\\lambda W",
+      "variables": {"L": "Average queue length", "λ": "Arrival rate", "W": "Average wait time"},
+      "source": "Little, 1961"
+    },
+    {
+      "id": "ROOFLINE",
+      "name": "Roofline Model",
+      "latex": "P=\\min(\\pi, \\beta\\cdot I)",
+      "variables": {"P": "Attainable performance", "π": "Peak compute", "β": "Memory bandwidth", "I": "Operational intensity"},
+      "source": "Williams et al., 2009"
+    },
+    {
+      "id": "SHANNON",
+      "name": "Shannon Capacity",
+      "latex": "C=B\\log_2(1+\\text{SNR})",
+      "variables": {"C": "Channel capacity (bits/s)", "B": "Bandwidth (Hz)", "SNR": "Signal-to-noise ratio"},
+      "source": "Shannon, 1948"
+    },
+    {
+      "id": "NYQUIST",
+      "name": "Nyquist Sampling",
+      "latex": "f_s>2f_{max}",
+      "variables": {"f_s": "Sampling frequency", "f_max": "Maximum signal frequency"},
+      "source": "Nyquist, 1928"
+    }
+  ]
+}

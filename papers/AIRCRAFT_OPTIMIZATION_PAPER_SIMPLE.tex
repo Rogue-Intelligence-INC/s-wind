@@ -1,0 +1,265 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+% Algorithm packages removed due to missing dependencies
+
+\geometry{margin=1in}
+
+\title{Exhaustive Search for Aerodynamically Optimal Aircraft Configurations:\\
+A First-Principles Framework with Semi-Empirical Correlations}
+
+\author{S-wind Research Team}
+
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present a systematic approach to identifying aerodynamically optimal subsonic aircraft configurations through exhaustive parameter space search. Our methodology combines first-principles aerodynamic equations with carefully documented semi-empirical correlations, explicitly distinguishing between physically grounded relationships and heuristic surrogate models. We evaluate over 10 million design candidates across a 5-dimensional parameter space comprising aspect ratio, sweep angle, taper ratio, thickness-to-chord ratio, and camber. Our best design achieves a lift-to-drag ratio of 27.74 at an aspect ratio of 18.3, with all solutions satisfying declared constraints.
+\end{abstract}
+
+\textbf{Keywords:} Aircraft design optimization, exhaustive search, aerodynamic efficiency, lift-to-drag ratio
+
+\section{Introduction}
+
+\subsection{Motivation}
+
+The quest for aerodynamically efficient aircraft configurations has driven aerospace engineering for over a century. Many published optimization studies suffer from a subtle but significant issue: \textit{constraint-solution inconsistency}. Authors declare constraints (e.g., Oswald efficiency $e > 0.5$) but report optimal solutions that violate these constraints (e.g., $e = 0.46$).
+
+\subsection{Contributions}
+
+\begin{enumerate}
+    \item \textbf{Self-consistent optimization framework}: Two constraint modes with guaranteed solution consistency.
+    \item \textbf{Transparent model hierarchy}: Clear distinction between first-principles, semi-empirical, and heuristic components.
+    \item \textbf{Physical realism}: Reynolds-number-dependent friction and structural penalties.
+    \item \textbf{Complete reproducibility}: All equations and algorithms provided.
+\end{enumerate}
+
+\section{Theoretical Framework}
+
+\subsection{First-Principles Aerodynamics}
+
+The fundamental aerodynamic force equations:
+
+\begin{equation}
+L = \frac{1}{2}\rho V^2 S C_L, \quad D = \frac{1}{2}\rho V^2 S C_D
+\end{equation}
+
+From Prandtl's lifting-line theory, the drag coefficient decomposes as:
+
+\begin{equation}
+C_D = C_{D0} + \frac{C_L^2}{\pi e \cdot AR}
+\end{equation}
+
+\subsection{Maximum Lift-to-Drag Ratio}
+
+Defining $K = 1/(\pi e \cdot AR)$, the lift-to-drag ratio is:
+
+\begin{equation}
+\frac{L}{D} = \frac{C_L}{C_{D0} + K C_L^2}
+\end{equation}
+
+Differentiating and setting to zero yields:
+
+\begin{equation}
+C_{L,opt} = \sqrt{\frac{C_{D0}}{K}} = \sqrt{C_{D0} \cdot \pi e \cdot AR}
+\end{equation}
+
+The maximum lift-to-drag ratio:
+
+\begin{equation}
+\boxed{\left(\frac{L}{D}\right)_{max} = \frac{1}{2}\sqrt{\frac{\pi e \cdot AR}{C_{D0}}}}
+\end{equation}
+
+\section{Semi-Empirical Correlations}
+
+\subsection{Oswald Span Efficiency Factor}
+
+From Raymer (1992):
+
+\begin{equation}
+e = 1.78(1 - 0.045 \cdot AR^{0.68}) - 0.64 \cdot \cos^{0.5}(\Lambda) \cdot (1 - 0.25|\lambda - 0.4|)
+\end{equation}
+
+\textbf{Applicability:} $4 < AR < 40$, $M < 0.6$.
+
+\subsection{Skin Friction Coefficient}
+
+Following Schlichting (1979), turbulent flat-plate friction:
+
+\begin{equation}
+C_f = \frac{0.455}{(\log_{10} Re)^{2.58}}
+\end{equation}
+
+\textbf{Applicability:} $Re > 5 \times 10^5$.
+
+\subsection{Form Factor}
+
+From Hoerner (1965):
+
+\begin{equation}
+FF = 1 + 1.2 \cdot (t/c) + 100 \cdot (t/c)^4
+\end{equation}
+
+\section{Heuristic Surrogate Models}
+
+\textbf{Important:} The following models are heuristic approximations, not first-principles relationships.
+
+\subsection{Camber Drag Bucket Model}
+
+\begin{equation}
+\Delta C_{D0,camber} = k_{bucket} \cdot (C_{L,opt} - C_{L,design})^2
+\end{equation}
+
+where $k_{bucket} \approx 0.005$ and $C_{L,design} \approx 10 \times (f/c)$.
+
+\subsection{Structural Penalty Model}
+
+\begin{equation}
+\Delta C_{D0,struct} = 0.0005 \cdot \left[\left(\frac{AR}{10}\right)^{1.5} - 1\right], \quad AR > 10
+\end{equation}
+
+\section{Optimization Methodology}
+
+\subsection{Design Variables}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+Variable & Symbol & Range & Step & Points \\
+\hline
+Aspect ratio & $AR$ & 5.0--25.0 & 0.1 & 201 \\
+Sweep angle & $\Lambda$ & 0--45 deg & 1 deg & 46 \\
+Taper ratio & $\lambda$ & 0.20--0.80 & 0.05 & 13 \\
+Thickness & $t/c$ & 6--15\% & 1\% & 10 \\
+Camber & $f/c$ & 0--8\% & 1\% & 9 \\
+\hline
+\end{tabular}
+\end{center}
+
+Total: $201 \times 46 \times 13 \times 10 \times 9 = 10,817,820$ configurations.
+
+\subsection{Constraint Modes}
+
+\textbf{Mode A (Strict):} $e > 0.5$, $AR \leq 25$ (conventional transport)
+
+\textbf{Mode B (Relaxed):} $e > 0.3$, $AR \leq 40$ (HALE UAV)
+
+\subsection{Flight Conditions}
+
+Altitude: 3,000 m, Velocity: 50 m/s, Wingspan: 30 m (reference).
+
+\section{Results}
+
+\subsection{Optimal Configuration}
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+Parameter & Mode A & Mode B \\
+\hline
+\textit{Constraints} & & \\
+$e$ constraint & $> 0.5$ & $> 0.3$ \\
+$AR$ constraint & $\leq 25$ & $\leq 40$ \\
+\hline
+\textit{Optimal Geometry} & & \\
+Aspect ratio $AR$ & 18.3 & 18.3 \\
+Sweep angle $\Lambda$ & 0 deg & 0 deg \\
+Taper ratio $\lambda$ & 0.40 & 0.40 \\
+Thickness $t/c$ & 6\% & 6\% \\
+Camber $f/c$ & 6\% & 6\% \\
+\hline
+\textit{Performance} & & \\
+$(L/D)_{max}$ & \textbf{27.74} & \textbf{27.74} \\
+Oswald $e$ & 0.5618 & 0.5618 \\
+$C_{L,opt}$ & 0.582 & 0.582 \\
+$C_{D0}$ & 0.01049 & 0.01049 \\
+\hline
+\textit{Verification} & & \\
+$e > e_{min}$? & Yes & Yes \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Drag Breakdown}
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+Component & $C_{D0}$ & Percentage \\
+\hline
+Skin friction & 0.00722 & 68.8\% \\
+Structural penalty & 0.00074 & 7.0\% \\
+Form drag & 0.00053 & 5.0\% \\
+Fuselage & 0.00200 & 19.1\% \\
+Camber penalty & 0.00001 & 0.1\% \\
+\hline
+\textbf{Total} & \textbf{0.01049} & 100\% \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Numerical Verification}
+
+\begin{align}
+K &= \frac{1}{\pi \times 0.5618 \times 18.3} = 0.03096 \\
+C_{L,opt} &= \sqrt{\frac{0.01049}{0.03096}} = 0.582 \\
+\left(\frac{L}{D}\right)_{max} &= \frac{0.582}{2 \times 0.01049} = 27.74 \quad \checkmark
+\end{align}
+
+\section{Discussion}
+
+\subsection{Comparison with Literature}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+Aircraft & $L/D$ & $AR$ & Sweep \\
+\hline
+This work & 27.7 & 18.3 & 0 deg \\
+Sailplane & $\sim$60 & $\sim$40 & 0 deg \\
+Albatross & $\sim$20 & $\sim$18 & 0 deg \\
+Boeing 787 & $\sim$20 & $\sim$9 & 32 deg \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Limitations}
+
+\begin{enumerate}
+    \item Low-fidelity aerodynamics (parabolic drag polar approximation)
+    \item Heuristic surrogates for camber and structure
+    \item Single-point optimization
+    \item No aeroelastic effects
+\end{enumerate}
+
+\section{Conclusion}
+
+We presented an exhaustive search framework for subsonic aircraft optimization with:
+
+\begin{enumerate}
+    \item Self-consistent constraint handling
+    \item Transparent model hierarchy
+    \item Reynolds-dependent friction and structural penalties
+    \item Complete reproducibility
+\end{enumerate}
+
+The optimal configuration achieves $(L/D)_{max} = 27.74$ at $AR = 18.3$ with zero sweep, 6\% thickness, and 6\% camber.
+
+\section*{References}
+
+\begin{enumerate}
+\item Abbott, I. H. \& Von Doenhoff, A. E. (1959). \textit{Theory of Wing Sections}. Dover.
+\item Hoerner, S. F. (1965). \textit{Fluid-Dynamic Drag}. Hoerner Fluid Dynamics.
+\item Prandtl, L. (1918). Tragfl\"ugeltheorie. \textit{Nachrichten G\"ottingen}.
+\item Raymer, D. P. (1992). \textit{Aircraft Design: A Conceptual Approach}. AIAA.
+\item Schlichting, H. (1979). \textit{Boundary Layer Theory}. McGraw-Hill.
+\end{enumerate}
+
+\end{document}

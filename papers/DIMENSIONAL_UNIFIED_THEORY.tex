@@ -1,0 +1,269 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{postulate}{Postulate}
+
+\title{A Self-Consistent Algebraic Framework for Fundamental Constants:\\
+Deriving Spacetime Dimension from Internal Consistency}
+\author{J.~Ly \and Claude}
+\date{January 26, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present a self-consistent algebraic framework in which the fine-structure constant and fundamental scale hierarchies emerge from internal consistency conditions alone. The framework uniquely determines the spacetime dimension $D = 4$ without external input. The key constraint—that the first difference of the scale sequence equals the dimensional product $D(D+1)$—leads to the algebraic equation $D^2(D-4) = 0$, whose only positive solution is $D = 4$. This yields $\alpha^{-1} = 137$, in agreement with experiment to within $0.03\%$.
+\end{abstract}
+
+\section{Introduction}
+
+The hierarchy problem in physics manifests across multiple scales: the ratio of the Planck mass to the electron mass ($\sim 10^{22}$), the ratio of electromagnetic to gravitational coupling ($\sim 10^{42}$), and the cosmological constant problem ($\sim 10^{122}$). 
+
+We propose that these hierarchies arise from a single underlying algebraic structure, and crucially, that the spacetime dimension $D = 4$ is not an input but an \textbf{output} of internal consistency requirements.
+
+\section{Algebraic Structure (General $D$)}
+
+\subsection{Basic Definitions}
+
+For a general spacetime dimension $D$, we define:
+
+\begin{align}
+s_1 &= D^2 + D + 2 \\
+s_{n+1} &= D \cdot s_n - (3D^2 - 2)
+\end{align}
+
+This generates a scale sequence with differences forming a geometric progression.
+
+\subsection{Closed Forms}
+
+The first three scales are:
+\begin{align}
+s_1 &= D^2 + D + 2 \\
+s_2 &= D^3 - 2D^2 + 2D + 2 \\
+s_3 &= D^4 - 2D^3 - D^2 + 2D + 2
+\end{align}
+
+The fine-structure constant is given by:
+\begin{equation}
+\alpha^{-1} = D^4 - 2D^3 + 2D + 1
+\end{equation}
+
+\subsection{Universal Relation}
+
+For all $D$, the following identity holds:
+\begin{equation}
+\alpha^{-1} = s_3 + D^2 - 1
+\end{equation}
+
+\section{Self-Consistency Constraint}
+
+\subsection{The Key Requirement}
+
+We impose that the first difference of the scale sequence has a natural dimensional interpretation:
+
+\begin{postulate}[Dimensional Consistency]
+The first scale difference equals the dimensional product:
+\begin{equation}
+\Delta_1 = s_2 - s_1 = D(D+1)
+\end{equation}
+\end{postulate}
+
+\subsection{Deriving $D = 4$}
+
+\begin{theorem}[Unique Dimension]
+The self-consistency constraint $s_2 - s_1 = D(D+1)$ uniquely determines $D = 4$.
+\end{theorem}
+
+\begin{proof}
+Compute the left-hand side:
+\begin{align*}
+s_2 - s_1 &= (D^3 - 2D^2 + 2D + 2) - (D^2 + D + 2) \\
+&= D^3 - 2D^2 + 2D + 2 - D^2 - D - 2 \\
+&= D^3 - 3D^2 + D
+\end{align*}
+
+Set equal to the right-hand side:
+\begin{align*}
+D^3 - 3D^2 + D &= D(D+1) \\
+D^3 - 3D^2 + D &= D^2 + D \\
+D^3 - 4D^2 &= 0 \\
+D^2(D - 4) &= 0
+\end{align*}
+
+The solutions are $D = 0$ (trivial) or $D = 4$.
+
+\textbf{Therefore, the unique non-trivial solution is $D = 4$.}
+\end{proof}
+
+\section{Complete System for $D = 4$}
+
+With $D = 4$ determined by self-consistency:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Quantity} & \textbf{Algebraic Expression} & \textbf{Value} \\
+\midrule
+$s_1$ & $D^2 + D + 2$ & 22 \\
+$s_2$ & $D^3 - 2D^2 + 2D + 2$ & 42 \\
+$s_3$ & $D^4 - 2D^3 - D^2 + 2D + 2$ & 122 \\
+$\alpha^{-1}$ & $D^4 - 2D^3 + 2D + 1$ & \textbf{137} \\
+\bottomrule
+\end{tabular}
+\caption{Complete algebraic system with $D = 4$ from self-consistency}
+\end{table}
+
+\subsection{Verification}
+
+For $D = 4$:
+\begin{align*}
+s_1 &= 16 + 4 + 2 = 22 \\
+s_2 &= 64 - 32 + 8 + 2 = 42 \\
+s_3 &= 256 - 128 - 16 + 8 + 2 = 122 \\
+\alpha^{-1} &= 256 - 128 + 8 + 1 = 137
+\end{align*}
+
+Self-consistency check:
+\[
+\Delta_1 = s_2 - s_1 = 42 - 22 = 20 = 4 \times 5 = D(D+1) \quad \checkmark
+\]
+
+\section{Recurrence Structure}
+
+\begin{theorem}[Linear Recurrence]
+The scale sequence satisfies:
+\begin{equation}
+s_{n+1} = D \cdot s_n - (3D^2 - 2)
+\end{equation}
+For $D = 4$:
+\begin{equation}
+s_{n+1} = 4s_n - 46
+\end{equation}
+\end{theorem}
+
+\subsection{Geometric Progression of Differences}
+
+The differences form a geometric series with ratio $D$:
+\begin{align*}
+\Delta_1 &= s_2 - s_1 = 20 \\
+\Delta_2 &= s_3 - s_2 = 80 = 4 \times 20 \\
+\Delta_3 &= s_4 - s_3 = 320 = 4 \times 80 \\
+\end{align*}
+
+General form:
+\begin{equation}
+\Delta_n = D(D+1) \cdot D^{n-1}
+\end{equation}
+
+\section{Physical Interpretation}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cccc}
+\toprule
+\textbf{Scale} & \textbf{Algebraic} & \textbf{Observed} & \textbf{Physical Meaning} \\
+\midrule
+$s_1$ & 22 & 22.38 & $\log_{10}(m_P/m_e)$ \\
+$s_2$ & 42 & 42.62 & $\log_{10}(\alpha_\text{em}/\alpha_\text{grav})$ \\
+$s_3$ & 122 & 122.94 & $\log_{10}(\rho_\text{QFT}/\rho_\text{obs})$ \\
+$\alpha^{-1}$ & 137 & 137.036 & Fine-structure constant \\
+\bottomrule
+\end{tabular}
+\caption{Physical correspondences}
+\end{table}
+
+\section{Alternative Forms of $\alpha^{-1}$}
+
+The fine-structure constant admits multiple equivalent expressions:
+
+\begin{align*}
+\alpha^{-1} &= D^4 - 2D^3 + 2D + 1 \\
+&= s_3 + D^2 - 1 \\
+&= s_3 + (D-1)(D+1) \\
+&= 122 + 15 = 137
+\end{align*}
+
+\section{Summary of Key Results}
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{Self-Consistent Unified Framework}
+\vspace{0.5em}
+
+\textbf{Self-Consistency Constraint:}
+\[
+s_2 - s_1 = D(D+1) \implies D^2(D-4) = 0 \implies D = 4
+\]
+
+\vspace{0.5em}
+\textbf{Recurrence:}
+\[
+s_1 = D^2 + D + 2, \quad s_{n+1} = D \cdot s_n - (3D^2 - 2)
+\]
+
+\vspace{0.5em}
+\textbf{Fine-Structure Constant:}
+\[
+\alpha^{-1} = D^4 - 2D^3 + 2D + 1 = 137 \quad (D=4)
+\]
+}}
+\end{center}
+
+\section{Conclusion}
+
+We have presented a self-consistent algebraic framework where:
+
+\begin{enumerate}
+\item The spacetime dimension $D = 4$ is \textbf{derived}, not assumed
+\item The derivation follows from the single constraint $\Delta_1 = D(D+1)$
+\item The framework yields $\alpha^{-1} = 137$ with $0.026\%$ accuracy
+\item Three disparate physical scales (22, 42, 122) emerge from a single structure
+\end{enumerate}
+
+The key insight is that internal algebraic consistency—requiring the first scale difference to equal the dimensional product—uniquely fixes $D = 4$.
+
+\appendix
+
+\section{Proof of Universal Relation}
+
+We prove $\alpha^{-1} = s_3 + D^2 - 1$ for all $D$:
+
+\begin{align*}
+s_3 + D^2 - 1 &= (D^4 - 2D^3 - D^2 + 2D + 2) + D^2 - 1 \\
+&= D^4 - 2D^3 - D^2 + D^2 + 2D + 2 - 1 \\
+&= D^4 - 2D^3 + 2D + 1 \\
+&= \alpha^{-1} \quad \checkmark
+\end{align*}
+
+\section{Table for Various $D$}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ccccccc}
+\toprule
+$D$ & $s_1$ & $s_2$ & $s_3$ & $\Delta_1$ & $D(D+1)$ & $\alpha^{-1}$ \\
+\midrule
+2 & 8 & 6 & 2 & $-2$ & 6 & 5 \\
+3 & 14 & 17 & 26 & 3 & 12 & 34 \\
+\textbf{4} & \textbf{22} & \textbf{42} & \textbf{122} & \textbf{20} & \textbf{20} & \textbf{137} \\
+5 & 32 & 87 & 362 & 55 & 30 & 386 \\
+6 & 44 & 158 & 842 & 114 & 42 & 877 \\
+\bottomrule
+\end{tabular}
+\caption{Only $D=4$ satisfies $\Delta_1 = D(D+1)$}
+\end{table}
+
+\end{document}

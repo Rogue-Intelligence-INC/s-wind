@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Optimal Aerodynamic Shape Design for Electric Vehicles}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 2,935,296 configurations for optimal aerodynamic shape design for electric vehicles. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize drag coefficient C\_D subject to volume efficiency > 0.7
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Frontal area & $W, H$ & $A = 0.85×W×H$ & Empirical & Vehicle cross-section ~85\% of rectangle\\\hline
+2 & Base drag & $$ & $C_D0 = 0.22$ & Initial & Modern EV baseline\\\hline
+3 & Windshield effect & $α_w$ & $ΔC_D,w = 0.002|α_w-30|$ & Semi-empirical & Optimal angle 30°\\\hline
+4 & Rear effect & $α_r$ & $ΔC_D,r = 0.003|α_r-15|$ & Semi-empirical & Optimal fastback 15°\\\hline
+5 & Total drag & $C_D0, ΔC_D$ & $C_D = C_D0 + Σ ΔC_D$ & Superposition & Sum of components\\\hline
+6 & Aero power & $C_D, A, v$ & $P = ½ρC_DAv³$ & First principles & Power = Drag × Velocity\\\hline
+7 & Range & $E, P, v$ & $R = E×η/P×v$ & Energy balance & Range = Energy/Power×Speed\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 8.5680
+
+\end{document}

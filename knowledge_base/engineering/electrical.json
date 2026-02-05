@@ -1,0 +1,47 @@
+{
+  "domain": "Electrical Engineering",
+  "formulas": [
+    {
+      "id": "OHM",
+      "name": "Ohm's Law",
+      "latex": "V=IR",
+      "variables": {"V": "Voltage (V)", "I": "Current (A)", "R": "Resistance (Ω)"},
+      "source": "Ohm, 1827"
+    },
+    {
+      "id": "POWER_ELEC",
+      "name": "Electrical Power",
+      "latex": "P=VI=I^2R=\\frac{V^2}{R}",
+      "variables": {"P": "Power (W)", "V": "Voltage", "I": "Current", "R": "Resistance"},
+      "source": "Joule, 1841"
+    },
+    {
+      "id": "CAPACITOR",
+      "name": "Capacitor Energy",
+      "latex": "E=\\frac{1}{2}CV^2",
+      "variables": {"E": "Energy (J)", "C": "Capacitance (F)", "V": "Voltage (V)"},
+      "source": "Electrostatics"
+    },
+    {
+      "id": "INDUCTOR",
+      "name": "Inductor Energy",
+      "latex": "E=\\frac{1}{2}LI^2",
+      "variables": {"E": "Energy (J)", "L": "Inductance (H)", "I": "Current (A)"},
+      "source": "Electromagnetic Theory"
+    },
+    {
+      "id": "TRANSFORMER",
+      "name": "Transformer Ratio",
+      "latex": "\\frac{V_s}{V_p}=\\frac{N_s}{N_p}",
+      "variables": {"V_s": "Secondary voltage", "V_p": "Primary voltage", "N": "Number of turns"},
+      "source": "Faraday, 1831"
+    },
+    {
+      "id": "SKIN_DEPTH",
+      "name": "Skin Depth",
+      "latex": "\\delta=\\sqrt{\\frac{2\\rho}{\\omega\\mu}}",
+      "variables": {"δ": "Skin depth (m)", "ρ": "Resistivity (Ω·m)", "ω": "Angular frequency", "μ": "Permeability"},
+      "source": "Electromagnetic Theory"
+    }
+  ]
+}

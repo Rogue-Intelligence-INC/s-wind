@@ -1,0 +1,547 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================================
+% Packages
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+% \usepackage{booktabs}  % Not available, using basic tables
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{geometry}
+\usepackage{natbib}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+% ============================================================================
+% Title
+% ============================================================================
+\title{Exhaustive Search for Aerodynamically Optimal Aircraft Configurations:\\
+A First-Principles Framework with Semi-Empirical Correlations}
+
+\author{
+S-wind Research Team\\
+\texttt{swind@valhalla.ai}
+}
+
+\date{January 2026}
+
+% ============================================================================
+% Document
+% ============================================================================
+\begin{document}
+
+\maketitle
+
+% ============================================================================
+% Abstract
+% ============================================================================
+\begin{abstract}
+We present a systematic approach to identifying aerodynamically optimal subsonic aircraft configurations through exhaustive parameter space search. Our methodology combines first-principles aerodynamic equations with carefully documented semi-empirical correlations, explicitly distinguishing between physically grounded relationships and heuristic surrogate models. We evaluate over 10 million design candidates across a 5-dimensional parameter space comprising aspect ratio, sweep angle, taper ratio, thickness-to-chord ratio, and camber. Unlike previous optimization studies, we introduce explicit structural penalties and Reynolds-number-dependent friction coefficients, resulting in more physically realistic optimal configurations. Our best design achieves a lift-to-drag ratio of 27.74 at an aspect ratio of 18.3, with all solutions satisfying declared constraints---addressing a common self-consistency issue in parametric aircraft optimization literature. We provide complete algorithmic descriptions and numerical verification chains to ensure reproducibility.
+\end{abstract}
+
+\textbf{Keywords:} Aircraft design optimization, exhaustive search, aerodynamic efficiency, lift-to-drag ratio, semi-empirical modeling
+
+% ============================================================================
+% 1. Introduction
+% ============================================================================
+\section{Introduction}
+
+\subsection{Motivation}
+
+The quest for aerodynamically efficient aircraft configurations has driven aerospace engineering for over a century. While modern computational fluid dynamics (CFD) and multi-disciplinary optimization (MDO) frameworks offer sophisticated approaches to this problem, there remains value in understanding the fundamental trade-offs through systematic parameter space exploration.
+
+Many published optimization studies suffer from a subtle but significant issue: \textit{constraint-solution inconsistency}. Authors declare constraints (e.g., Oswald efficiency $e > 0.5$) but report optimal solutions that violate these constraints (e.g., $e = 0.46$). This undermines the validity of the optimization claims and creates confusion for practitioners attempting to apply reported results.
+
+\subsection{Contributions}
+
+This paper makes the following contributions:
+
+\begin{enumerate}
+    \item \textbf{Self-consistent optimization framework}: We provide two constraint modes with guaranteed solution consistency, explicitly verified for each result.
+    
+    \item \textbf{Transparent model hierarchy}: We clearly distinguish between:
+    \begin{itemize}
+        \item First-principles relationships (lift/drag equations, induced drag theory)
+        \item Semi-empirical correlations (Oswald efficiency, friction coefficient)
+        \item Heuristic surrogates (camber drag bucket model, structural penalty)
+    \end{itemize}
+    
+    \item \textbf{Physical realism improvements}: We incorporate Reynolds-number-dependent friction coefficients and aspect-ratio-dependent structural penalties, addressing the tendency of simplified models to predict unrealistically high aspect ratios.
+    
+    \item \textbf{Complete reproducibility}: All equations, algorithms, and numerical verification chains are provided to enable independent verification.
+\end{enumerate}
+
+% ============================================================================
+% 2. Theoretical Framework
+% ============================================================================
+\section{Theoretical Framework}
+
+\subsection{First-Principles Aerodynamics}
+
+The fundamental aerodynamic force equations follow from dimensional analysis and momentum conservation:
+
+\begin{equation}
+L = \frac{1}{2}\rho V^2 S C_L
+\label{eq:lift}
+\end{equation}
+
+\begin{equation}
+D = \frac{1}{2}\rho V^2 S C_D
+\label{eq:drag}
+\end{equation}
+
+where $\rho$ is air density, $V$ is freestream velocity, $S$ is reference wing area, and $C_L$, $C_D$ are lift and drag coefficients respectively.
+
+From Prandtl's lifting-line theory \citep{prandtl1918}, the drag coefficient decomposes as:
+
+\begin{equation}
+C_D = C_{D0} + \frac{C_L^2}{\pi e \cdot AR}
+\label{eq:drag_polar}
+\end{equation}
+
+where $C_{D0}$ is the zero-lift drag coefficient, $e$ is the Oswald span efficiency factor, and $AR = b^2/S$ is the aspect ratio.
+
+\subsection{Maximum Lift-to-Drag Ratio}
+
+The lift-to-drag ratio is:
+
+\begin{equation}
+\frac{L}{D} = \frac{C_L}{C_D} = \frac{C_L}{C_{D0} + K C_L^2}
+\label{eq:ld_ratio}
+\end{equation}
+
+where $K = 1/(\pi e \cdot AR)$ is the induced drag factor.
+
+Differentiating with respect to $C_L$ and setting equal to zero:
+
+\begin{equation}
+\frac{d(L/D)}{dC_L} = \frac{C_{D0} - K C_L^2}{(C_{D0} + K C_L^2)^2} = 0
+\end{equation}
+
+yields the optimal lift coefficient:
+
+\begin{equation}
+C_{L,opt} = \sqrt{\frac{C_{D0}}{K}} = \sqrt{C_{D0} \cdot \pi e \cdot AR}
+\label{eq:cl_opt}
+\end{equation}
+
+Substituting back, the maximum lift-to-drag ratio is:
+
+\begin{equation}
+\boxed{\left(\frac{L}{D}\right)_{max} = \frac{1}{2}\sqrt{\frac{\pi e \cdot AR}{C_{D0}}}}
+\label{eq:ld_max}
+\end{equation}
+
+This derivation is exact within the parabolic drag polar assumption.
+
+% ============================================================================
+% 3. Semi-Empirical Correlations
+% ============================================================================
+\section{Semi-Empirical Correlations}
+
+\subsection{Oswald Span Efficiency Factor}
+
+We employ the widely-used correlation from \citet{raymer1992}:
+
+\begin{equation}
+e_{base} = 1.78(1 - 0.045 \cdot AR^{0.68}) - 0.64
+\label{eq:oswald_base}
+\end{equation}
+
+with corrections for sweep angle $\Lambda$ and taper ratio $\lambda$:
+
+\begin{equation}
+e = e_{base} \cdot \cos^{0.5}(\Lambda) \cdot (1 - 0.25|\lambda - 0.4|)
+\label{eq:oswald_full}
+\end{equation}
+
+\textbf{Applicability:} $4 < AR < 40$, $M < 0.6$, conventional planforms.
+
+\subsection{Skin Friction Coefficient}
+
+Following \citet{schlichting1979}, the turbulent flat-plate friction coefficient is:
+
+\begin{equation}
+C_f = \frac{0.455}{(\log_{10} Re)^{2.58}}
+\label{eq:cf}
+\end{equation}
+
+where the Reynolds number is computed as:
+
+\begin{equation}
+Re = \frac{V \cdot \bar{c}}{\nu}
+\end{equation}
+
+with $\bar{c}$ the mean aerodynamic chord and $\nu$ the kinematic viscosity.
+
+\textbf{Applicability:} $Re > 5 \times 10^5$ (fully turbulent).
+
+\subsection{Form Factor}
+
+The wing form factor from \citet{hoerner1965}:
+
+\begin{equation}
+FF = 1 + 1.2 \cdot (t/c) + 100 \cdot (t/c)^4
+\label{eq:form_factor}
+\end{equation}
+
+\textbf{Applicability:} $t/c < 20\%$, streamlined airfoils.
+
+% ============================================================================
+% 4. Heuristic Surrogate Models
+% ============================================================================
+\section{Heuristic Surrogate Models}
+
+\textcolor{red}{\textbf{Important Disclaimer:}} The following models are heuristic approximations introduced to capture real physical phenomena in a computationally tractable manner. They are \textit{not} first-principles relationships and should be treated as surrogates with limited generalizability.
+
+\subsection{Camber Drag Bucket Model}
+
+Airfoil drag polars exhibit a ``bucket'' of minimum drag centered around a design lift coefficient. We model this as:
+
+\begin{equation}
+\Delta C_{D0,camber} = k_{bucket} \cdot (C_{L,opt} - C_{L,design})^2
+\label{eq:camber_penalty}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $k_{bucket} \approx 0.005$ (empirical coefficient)
+    \item $C_{L,design} \approx 10 \times (f/c)$ (design lift coefficient)
+    \item $f/c$ is the camber ratio
+\end{itemize}
+
+\textbf{Justification:} The relationship $C_{L,design} \approx 10 \times camber$ is an engineering approximation. Actual values vary with airfoil family, Reynolds number, and thickness. For NACA 4-digit airfoils, the relationship is closer to $C_{L,0} \approx 4\pi \times camber$ from thin-airfoil theory, but this assumes zero angle of attack. The coefficient ``10'' represents a practical middle ground.
+
+\textbf{Effect:} This model makes camber an \textit{active} optimization variable---without it, camber would not affect the objective function, rendering one dimension of the search space ineffective.
+
+\subsection{Structural Penalty Model}
+
+High aspect ratio wings incur structural weight penalties that indirectly increase drag through larger required wing areas. We model this as:
+
+\begin{equation}
+\Delta C_{D0,struct} = 0.0005 \cdot \left[\left(\frac{AR}{AR_{ref}}\right)^{1.5} - 1\right], \quad AR > AR_{ref}
+\label{eq:struct_penalty}
+\end{equation}
+
+where $AR_{ref} = 10$ is a reference aspect ratio below which no penalty is applied.
+
+\textbf{Justification:} Wing structural weight scales approximately as $AR^{1.5}$ to $AR^2$ for constant strength requirements. This penalty prevents the optimizer from selecting arbitrarily high aspect ratios, which is a known failure mode of simplified aerodynamic models.
+
+% ============================================================================
+% 5. Optimization Methodology
+% ============================================================================
+\section{Optimization Methodology}
+
+\subsection{Design Variables}
+
+We optimize over five geometric parameters:
+
+\begin{table}[h]
+\centering
+\caption{Design Variable Ranges}
+\label{tab:design_vars}
+\begin{tabular}{llccc}
+\hline\hline
+Variable & Symbol & Range & Step & Points \\
+\hline
+Aspect ratio & $AR$ & 5.0--25.0 & 0.1 & 201 \\
+Sweep angle & $\Lambda$ & 0°--45° & 1° & 46 \\
+Taper ratio & $\lambda$ & 0.20--0.80 & 0.05 & 13 \\
+Thickness ratio & $t/c$ & 6\%--15\% & 1\% & 10 \\
+Camber ratio & $f/c$ & 0\%--8\% & 1\% & 9 \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+Total search space: $201 \times 46 \times 13 \times 10 \times 9 = 10,817,820$ configurations.
+
+\subsection{Constraint Modes}
+
+We define two constraint modes to address different application domains:
+
+\textbf{Mode A (Strict):} For conventional transport aircraft
+\begin{itemize}
+    \item $e > 0.5$ (reasonable span efficiency)
+    \item $AR \leq 25$ (structural feasibility)
+    \item $C_{L,opt} < 1.5$ (stall margin)
+\end{itemize}
+
+\textbf{Mode B (Relaxed):} For high-altitude long-endurance (HALE) UAVs
+\begin{itemize}
+    \item $e > 0.3$ (allows highly tapered wings)
+    \item $AR \leq 40$ (advanced composite structures)
+    \item $C_{L,opt} < 1.5$
+\end{itemize}
+
+\subsection{Flight Conditions}
+
+\begin{table}[h]
+\centering
+\caption{Reference Flight Conditions}
+\label{tab:flight_cond}
+\begin{tabular}{lcc}
+\hline\hline
+Parameter & Value & Source \\
+\hline
+Altitude & 3,000 m & Design choice \\
+Velocity & 50 m/s & Cruise condition \\
+Air density $\rho$ & 0.909 kg/m³ & ISA atmosphere \\
+Kinematic viscosity $\nu$ & $1.86 \times 10^{-5}$ m²/s & ISA atmosphere \\
+Reference wingspan & 30 m & Scaling reference \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\subsection{Algorithm}
+
+\begin{algorithm}
+\caption{Exhaustive Aerodynamic Optimization}
+\label{alg:optimization}
+\begin{algorithmic}[1]
+\REQUIRE Parameter ranges, constraints, flight conditions
+\ENSURE Optimal design satisfying all constraints
+\STATE Initialize $best\_L/D \leftarrow 0$, $best\_design \leftarrow \emptyset$
+\FOR{each $(AR, \Lambda, \lambda, t/c, f/c)$ in search space}
+    \STATE Compute $e$ using Eq.~\eqref{eq:oswald_full}
+    \STATE Compute $Re$ from flight conditions and $\bar{c}$
+    \STATE Compute $C_f$ using Eq.~\eqref{eq:cf}
+    \STATE Compute $FF$ using Eq.~\eqref{eq:form_factor}
+    \STATE Compute $C_{D0} = C_f \cdot FF \cdot (S_{wet}/S) + \Delta C_{D0,camber} + \Delta C_{D0,struct}$
+    \STATE Compute $K = 1/(\pi e \cdot AR)$
+    \STATE Compute $C_{L,opt} = \sqrt{C_{D0}/K}$
+    \STATE Compute $(L/D)_{max}$ using Eq.~\eqref{eq:ld_max}
+    \IF{constraints satisfied \AND $(L/D)_{max} > best\_L/D$}
+        \STATE $best\_L/D \leftarrow (L/D)_{max}$
+        \STATE $best\_design \leftarrow$ current configuration
+    \ENDIF
+\ENDFOR
+\RETURN $best\_design$
+\end{algorithmic}
+\end{algorithm}
+
+% ============================================================================
+% 6. Results
+% ============================================================================
+\section{Results}
+
+\subsection{Optimal Configurations}
+
+\begin{table}[h]
+\centering
+\caption{Optimal Designs for Both Constraint Modes}
+\label{tab:results}
+\begin{tabular}{lcc}
+\hline\hline
+Parameter & Mode A (Strict) & Mode B (Relaxed) \\
+\hline
+\multicolumn{3}{c}{\textit{Constraints}} \\
+$e$ constraint & $> 0.5$ & $> 0.3$ \\
+$AR$ constraint & $\leq 25$ & $\leq 40$ \\
+\hline
+\multicolumn{3}{c}{\textit{Optimal Geometry}} \\
+Aspect ratio $AR$ & 18.3 & 18.3 \\
+Sweep angle $\Lambda$ & 0° & 0° \\
+Taper ratio $\lambda$ & 0.40 & 0.40 \\
+Thickness $t/c$ & 6\% & 6\% \\
+Camber $f/c$ & 6\% & 6\% \\
+\hline
+\multicolumn{3}{c}{\textit{Aerodynamic Performance}} \\
+$(L/D)_{max}$ & \textbf{27.74} & \textbf{27.74} \\
+Oswald efficiency $e$ & 0.5618 & 0.5618 \\
+Optimal $C_L$ & 0.582 & 0.582 \\
+Zero-lift drag $C_{D0}$ & 0.01049 & 0.01049 \\
+\hline
+\multicolumn{3}{c}{\textit{Constraint Verification}} \\
+$e > e_{min}$? & \checkmark ($0.56 > 0.5$) & \checkmark ($0.56 > 0.3$) \\
+$AR \leq AR_{max}$? & \checkmark ($18.3 \leq 25$) & \checkmark ($18.3 \leq 40$) \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key observation:} Both constraint modes yield identical optimal solutions, indicating that the structural penalty (not the $e$ constraint) is the binding factor limiting aspect ratio.
+
+\subsection{Drag Breakdown}
+
+\begin{table}[h]
+\centering
+\caption{Zero-Lift Drag Decomposition}
+\label{tab:drag_breakdown}
+\begin{tabular}{lcc}
+\hline\hline
+Component & $C_{D0}$ Contribution & Percentage \\
+\hline
+Skin friction & 0.00722 & 68.8\% \\
+Structural penalty & 0.00074 & 7.0\% \\
+Form drag & 0.00053 & 5.0\% \\
+Fuselage & 0.00200 & 19.1\% \\
+Camber penalty & 0.00001 & 0.1\% \\
+\hline
+\textbf{Total} & \textbf{0.01049} & 100\% \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+The negligible camber penalty (0.1\%) indicates that the optimal camber (6\%) closely matches the design lift coefficient required for minimum drag operation.
+
+\subsection{Numerical Verification}
+
+We verify the closed-form solution:
+
+\begin{align}
+K &= \frac{1}{\pi \times 0.5618 \times 18.3} = 0.03096 \\
+C_{L,opt} &= \sqrt{\frac{0.01049}{0.03096}} = 0.582 \\
+\left(\frac{L}{D}\right)_{max} &= \frac{0.582}{2 \times 0.01049} = 27.74 \quad \checkmark
+\end{align}
+
+% ============================================================================
+% 7. Discussion
+% ============================================================================
+\section{Discussion}
+
+\subsection{Comparison with Literature}
+
+\begin{table}[h]
+\centering
+\caption{Comparison with Reference Aircraft}
+\label{tab:comparison}
+\begin{tabular}{lccc}
+\hline\hline
+Aircraft/Design & $L/D$ & $AR$ & Sweep \\
+\hline
+\textbf{This work (optimal)} & \textbf{27.7} & \textbf{18.3} & \textbf{0°} \\
+Competition sailplane & $\sim$60 & $\sim$40 & 0° \\
+Albatross (biological) & $\sim$20 & $\sim$18 & 0° \\
+Boeing 787 & $\sim$20 & $\sim$9 & 32° \\
+F-22 Raptor & $\sim$8 & $\sim$2.4 & 42° \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+Our optimal design falls between high-performance sailplanes and the natural albatross, which is physically reasonable for a 30m-wingspan aircraft optimized for subsonic cruise efficiency.
+
+\subsection{Why Not Higher Aspect Ratio?}
+
+The structural penalty model limits $AR$ to 18.3 rather than the constraint maximum of 25. This suggests that:
+
+\begin{enumerate}
+    \item The drag reduction from increasing $AR$ is offset by structural penalties
+    \item Real aircraft designs face similar trade-offs
+    \item Competition sailplanes achieve $AR \approx 40$ through advanced composite structures and reduced penalty coefficients
+\end{enumerate}
+
+\subsection{Limitations}
+
+\begin{enumerate}
+    \item \textbf{Low-fidelity aerodynamics:} The parabolic drag polar and semi-empirical correlations are approximations. CFD or wind tunnel validation would be required for detailed design.
+    
+    \item \textbf{Heuristic surrogates:} The camber drag bucket and structural penalty models are simplified. More accurate versions would require airfoil database queries and structural FEM analysis.
+    
+    \item \textbf{Single-point optimization:} We optimize for a single cruise condition. Multi-point optimization considering takeoff, climb, and loiter would yield different results.
+    
+    \item \textbf{No aeroelastic effects:} Wing flexibility, flutter, and divergence constraints are not modeled.
+\end{enumerate}
+
+\subsection{Addressing Self-Consistency}
+
+A key contribution of this work is explicit constraint verification. Many optimization studies implicitly assume constraints are satisfied without verification. We demonstrate that:
+
+\begin{itemize}
+    \item Declaring $e > 0.5$ while reporting $e = 0.46$ is a self-consistency error
+    \item Proper constraint handling may yield lower $(L/D)_{max}$ but more reliable results
+    \item Both constraint modes should be reported when targeting different applications
+\end{itemize}
+
+% ============================================================================
+% 8. Conclusion
+% ============================================================================
+\section{Conclusion}
+
+We presented an exhaustive search framework for subsonic aircraft aerodynamic optimization that addresses common methodological issues in the literature:
+
+\begin{enumerate}
+    \item \textbf{Self-consistency:} All reported solutions satisfy declared constraints, verified explicitly.
+    
+    \item \textbf{Model transparency:} First-principles, semi-empirical, and heuristic components are clearly distinguished.
+    
+    \item \textbf{Physical realism:} Reynolds-dependent friction and structural penalties prevent unrealistic optima.
+    
+    \item \textbf{Reproducibility:} Complete algorithmic and numerical details enable independent verification.
+\end{enumerate}
+
+The optimal configuration achieves $(L/D)_{max} = 27.74$ at $AR = 18.3$ with zero sweep, 6\% thickness, and 6\% camber. This represents a physically realistic design point for a subsonic aircraft balancing aerodynamic efficiency against structural weight.
+
+Future work should incorporate higher-fidelity aerodynamic models (XFOIL, panel methods, or CFD), explicit structural weight estimation, and multi-point optimization for realistic mission profiles.
+
+% ============================================================================
+% References
+% ============================================================================
+\bibliographystyle{plainnat}
+
+\begin{thebibliography}{10}
+
+\bibitem[Abbott and Von~Doenhoff(1959)]{abbott1959}
+I.~H. Abbott and A.~E. Von~Doenhoff.
+\newblock \emph{Theory of Wing Sections}.
+\newblock Dover Publications, 1959.
+
+\bibitem[Hoerner(1965)]{hoerner1965}
+S.~F. Hoerner.
+\newblock \emph{Fluid-Dynamic Drag}.
+\newblock Hoerner Fluid Dynamics, 1965.
+
+\bibitem[Prandtl(1918)]{prandtl1918}
+L.~Prandtl.
+\newblock Tragfl{\"u}geltheorie. {I}. {M}itteilung.
+\newblock \emph{Nachrichten von der Gesellschaft der Wissenschaften zu G{\"o}ttingen}, pages 451--477, 1918.
+
+\bibitem[Raymer(1992)]{raymer1992}
+D.~P. Raymer.
+\newblock \emph{Aircraft Design: A Conceptual Approach}.
+\newblock AIAA Education Series, 1992.
+
+\bibitem[Schlichting(1979)]{schlichting1979}
+H.~Schlichting.
+\newblock \emph{Boundary Layer Theory}.
+\newblock McGraw-Hill, 7th edition, 1979.
+
+\end{thebibliography}
+
+% ============================================================================
+% Appendix
+% ============================================================================
+\appendix
+
+\section{ISA Atmosphere Model}
+
+The International Standard Atmosphere (ISA) for the troposphere ($h < 11,000$ m):
+
+\begin{align}
+T &= T_0 - L \cdot h \\
+\rho &= \rho_0 \left(\frac{T}{T_0}\right)^{g/(RL) - 1}
+\end{align}
+
+where $T_0 = 288.15$ K, $\rho_0 = 1.225$ kg/m³, $L = 0.0065$ K/m, $g = 9.80665$ m/s², and $R = 287.058$ J/(kg·K).
+
+Dynamic viscosity via Sutherland's formula:
+
+\begin{equation}
+\mu = \mu_0 \left(\frac{T}{T_0}\right)^{1.5} \frac{T_0 + S}{T + S}
+\end{equation}
+
+where $\mu_0 = 1.789 \times 10^{-5}$ Pa·s and $S = 110.4$ K.
+
+\section{Complete Parameter Search Verification}
+
+Search space cardinality:
+\begin{equation}
+N = 201 \times 46 \times 13 \times 10 \times 9 = 10,817,820
+\end{equation}
+
+Constraint satisfaction rate: 68.2\% (7,381,350 valid configurations).
+
+\end{document}

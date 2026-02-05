@@ -1,0 +1,47 @@
+{
+  "domain": "Fluid Dynamics",
+  "formulas": [
+    {
+      "id": "NAVIER_STOKES",
+      "name": "Navier-Stokes Equation",
+      "latex": "\\rho\\left(\\frac{\\partial\\mathbf{v}}{\\partial t}+\\mathbf{v}\\cdot\\nabla\\mathbf{v}\\right)=-\\nabla p+\\mu\\nabla^2\\mathbf{v}+\\mathbf{f}",
+      "variables": {"ρ": "Density", "v": "Velocity field", "p": "Pressure", "μ": "Viscosity", "f": "Body forces"},
+      "source": "Navier, 1822; Stokes, 1845"
+    },
+    {
+      "id": "REYNOLDS",
+      "name": "Reynolds Number",
+      "latex": "Re = \\frac{\\rho v L}{\\mu}",
+      "variables": {"Re": "Reynolds number", "ρ": "Density", "v": "Velocity", "L": "Length", "μ": "Viscosity"},
+      "source": "Reynolds, 1883"
+    },
+    {
+      "id": "BERNOULLI",
+      "name": "Bernoulli Equation",
+      "latex": "P_1+\\frac{1}{2}\\rho v_1^2+\\rho gh_1=P_2+\\frac{1}{2}\\rho v_2^2+\\rho gh_2",
+      "variables": {"P": "Pressure", "ρ": "Density", "v": "Velocity", "g": "Gravity", "h": "Height"},
+      "source": "Bernoulli, 1738"
+    },
+    {
+      "id": "DARCY_WEISBACH",
+      "name": "Darcy-Weisbach Equation",
+      "latex": "\\Delta P=f\\frac{L}{D}\\frac{\\rho v^2}{2}",
+      "variables": {"ΔP": "Pressure drop", "f": "Friction factor", "L": "Pipe length", "D": "Diameter"},
+      "source": "Darcy, 1857; Weisbach, 1845"
+    },
+    {
+      "id": "HAGEN_POISEUILLE",
+      "name": "Hagen-Poiseuille Flow",
+      "latex": "Q=\\frac{\\pi r^4\\Delta P}{8\\mu L}",
+      "variables": {"Q": "Volume flow rate", "r": "Radius", "ΔP": "Pressure difference", "μ": "Viscosity"},
+      "source": "Hagen, 1839; Poiseuille, 1840"
+    },
+    {
+      "id": "MACH",
+      "name": "Mach Number",
+      "latex": "Ma=\\frac{v}{c}=\\frac{v}{\\sqrt{\\gamma RT}}",
+      "variables": {"Ma": "Mach number", "v": "Flow velocity", "c": "Speed of sound", "γ": "Specific heat ratio"},
+      "source": "Mach, 1877"
+    }
+  ]
+}

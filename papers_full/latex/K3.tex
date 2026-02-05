@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Autonomous Vehicle Path Planning Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 5,760 configurations for autonomous vehicle path planning optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize travel time subject to safety constraints
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & State space & $T, Δt, Δv, Δy$ & $N = (T/Δt)×(v_max/Δv)×(y_max/Δy)$ & Discretization & Grid size\\\hline
+2 & Dynamics & $x, v, a$ & $x' = v, v' = a$ & Kinematics & Double integrator\\\hline
+3 & Cost function & $t, a, j$ & $J = w_t×t + w_a×∫a²dt + w_j×∫j²dt$ & Objective & Time + comfort\\\hline
+4 & Collision check & $x, obstacles$ & $d_min = min_i ||x - x_i||$ & Distance & Closest approach\\\hline
+5 & Safety constraint & $d_min, d_safe$ & $d_min > d_safe$ & Constraint & Buffer distance\\\hline
+6 & A* search & $graph, costs$ & $path = A*(start, goal, J)$ & Algorithm & Optimal path\\\hline
+7 & Trajectory smoothing & $path$ & $traj = minimize(J_smooth)$ & Optimization & Continuous trajectory\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 1.1300
+
+\end{document}

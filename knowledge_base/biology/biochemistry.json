@@ -1,0 +1,47 @@
+{
+  "domain": "Biochemistry",
+  "formulas": [
+    {
+      "id": "MICHAELIS_MENTEN",
+      "name": "Michaelis-Menten Kinetics",
+      "latex": "v=\\frac{V_{max}[S]}{K_m+[S]}",
+      "variables": {"v": "Reaction velocity", "V_max": "Maximum velocity", "[S]": "Substrate concentration", "K_m": "Michaelis constant"},
+      "source": "Michaelis & Menten, 1913"
+    },
+    {
+      "id": "HILL",
+      "name": "Hill Equation",
+      "latex": "Y=\\frac{[L]^n}{K_d^n+[L]^n}",
+      "variables": {"Y": "Fraction bound", "[L]": "Ligand concentration", "K_d": "Dissociation constant", "n": "Hill coefficient"},
+      "source": "Hill, 1910"
+    },
+    {
+      "id": "HENDERSON_HASSELBALCH",
+      "name": "Henderson-Hasselbalch",
+      "latex": "pH=pK_a+\\log\\frac{[A^-]}{[HA]}",
+      "variables": {"pH": "Acidity", "pK_a": "Acid dissociation constant", "[A⁻]": "Conjugate base", "[HA]": "Acid"},
+      "source": "Henderson, 1908; Hasselbalch, 1917"
+    },
+    {
+      "id": "NERNST",
+      "name": "Nernst Equation",
+      "latex": "E=E^0-\\frac{RT}{nF}\\ln Q",
+      "variables": {"E": "Cell potential", "E⁰": "Standard potential", "R": "Gas constant", "T": "Temperature", "F": "Faraday constant"},
+      "source": "Nernst, 1889"
+    },
+    {
+      "id": "GIBBS_FREE",
+      "name": "Gibbs Free Energy",
+      "latex": "\\Delta G=\\Delta H-T\\Delta S",
+      "variables": {"ΔG": "Free energy change", "ΔH": "Enthalpy change", "T": "Temperature", "ΔS": "Entropy change"},
+      "source": "Gibbs, 1876"
+    },
+    {
+      "id": "CELL_GROWTH",
+      "name": "Exponential Cell Growth",
+      "latex": "N(t)=N_0 e^{\\mu t}",
+      "variables": {"N(t)": "Cell count at time t", "N_0": "Initial count", "μ": "Specific growth rate", "t": "Time"},
+      "source": "Monod, 1949"
+    }
+  ]
+}

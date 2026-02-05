@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{GPU Cluster Scheduling for Multi-Tenant LLM Serving}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 588,544 configurations for gpu cluster scheduling for multi-tenant llm serving. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize cost subject to SLA satisfaction > 99\%
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Arrival rate & $λ, N_tenant$ & $Λ = Σλ_i$ & Aggregation & Total request rate\\\hline
+2 & Service rate & $N_gpu, μ$ & $μ_total = N_gpu×μ$ & Capacity & GPU throughput\\\hline
+3 & Queue delay & $Λ, μ$ & $W_q = Λ/(μ(μ-Λ))$ & M/M/1 & Queueing theory\\\hline
+4 & Utilization & $Λ, μ$ & $ρ = Λ/μ$ & Definition & Server utilization\\\hline
+5 & P99 latency & $W_q, σ$ & $t_99 = W_q + 2.33σ$ & Statistics & 99th percentile\\\hline
+6 & SLA satisfaction & $t_99, SLA$ & $P_SLA = P(t < SLA)$ & Probability & CDF evaluation\\\hline
+7 & Cost & $N_gpu, t$ & $Cost = N_gpu × r_gpu × t$ & Economics & GPU-hours\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 6.4500
+
+\end{document}

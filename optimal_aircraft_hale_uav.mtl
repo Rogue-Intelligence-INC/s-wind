@@ -1,0 +1,8 @@
+# Aircraft Material
+newmtl aircraft
+Ns 250.0
+Ka 0.1 0.1 0.1
+Kd 0.92 0.92 0.95
+Ks 0.6 0.6 0.6
+d 1.0
+illum 2

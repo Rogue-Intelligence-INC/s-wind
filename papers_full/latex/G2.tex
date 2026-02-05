@@ -1,0 +1,34 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{eVTOL Urban Air Mobility Vehicle Design}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 52,920 configurations for evtol urban air mobility vehicle design. Complete 8-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize range subject to noise < 65 dBA
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Disk area & $N_r, D$ & $A = N_r × π(D/2)²$ & Geometry & Total rotor area\\\hline
+2 & Thrust required & $W$ & $T = W$ & Hover & Thrust equals weight\\\hline
+3 & Induced velocity & $T, A, ρ$ & $v_i = √(T/2ρA)$ & Momentum & Actuator disk theory\\\hline
+4 & Induced power & $T, v_i$ & $P_i = T × v_i$ & First principles & Ideal hover power\\\hline
+5 & Profile power & $ρ, A, V_tip, C_d$ & $P_0 = ρA V_tip³ C_d/8$ & Blade element & Rotor drag\\\hline
+6 & Total power & $P_i, P_0, η$ & $P = (P_i + P_0)/η$ & Efficiency & Including losses\\\hline
+7 & Hover endurance & $E_batt, P$ & $t_hover = E_batt / P$ & Energy & Battery duration\\\hline
+8 & Noise level & $V_tip, DL$ & $L = 10log(DL) + 30log(V_tip)$ & Empirical & NASA correlation\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 123.9400
+
+\end{document}

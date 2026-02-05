@@ -1,0 +1,8 @@
+# Optimal Aircraft Material v2.0
+newmtl optimal
+Ns 300.0
+Ka 0.1 0.1 0.1
+Kd 0.95 0.95 0.98
+Ks 0.8 0.8 0.8
+d 1.0
+illum 2

@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Universal Basic Income Implementation Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 54,432 configurations for universal basic income implementation optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize welfare subject to fiscal sustainability
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Gross cost & $B, N_pop$ & $C_gross = B × N_pop × 12$ & Definition & Annual cost\\\hline
+2 & Phase-out savings & $τ, Y_th, dist$ & $S = ∫τ×max(0,Y-Y_th)dF(Y)$ & Integration & Income-based reduction\\\hline
+3 & Net cost & $C_gross, S, η$ & $C_net = (C_gross - S) / η_admin$ & Efficiency & After clawback\\\hline
+4 & Tax revenue & $r_tax, GDP$ & $R = r_tax × GDP × Δτ$ & Funding & New taxes\\\hline
+5 & Utility gain & $B, U$ & $ΔU = Σ u(c_i + B) - u(c_i)$ & Welfare & Consumption utility\\\hline
+6 & Labor supply effect & $B, w$ & $ΔL = -ε_L × B/w$ & Elasticity & Income effect\\\hline
+7 & Welfare function & $ΔU, ΔL, α$ & $W = ΔU - α × |ΔL|$ & Objective & Net welfare\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 4100.3860
+
+\end{document}

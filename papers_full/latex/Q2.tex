@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Ocean Plastic Cleanup System Design}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 191,520 configurations for ocean plastic cleanup system design. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize plastic collection rate subject to marine safety
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Swept area & $L, D, v, t$ & $A_swept = L × D × v × t$ & Geometry & Volume processed\\\hline
+2 & Plastic concentration & $location$ & $C = f(lat, lon, season)$ & Data & GPGP model\\\hline
+3 & Collection rate & $A_swept, C, η$ & $R = A_swept × C × η$ & Mass balance & kg/day\\\hline
+4 & Capture efficiency & $s, v$ & $η = 1 - exp(-k×D/s)$ & Filtration & Mesh capture\\\hline
+5 & Drag force & $L, D, v, C_d$ & $F_d = ½ρC_d×L×D×v²$ & Fluid mechanics & Hydrodynamic drag\\\hline
+6 & Power required & $F_d, v$ & $P = F_d × v$ & Definition & Towing power\\\hline
+7 & Bycatch rate & $s, R$ & $B = B_0 × (s_ref/s)²$ & Empirical & Size selectivity\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 21.4600
+
+\end{document}

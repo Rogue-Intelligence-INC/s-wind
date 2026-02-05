@@ -1,0 +1,47 @@
+{
+  "domain": "Economic Optimization",
+  "formulas": [
+    {
+      "id": "EOQ",
+      "name": "Economic Order Quantity",
+      "latex": "Q^*=\\sqrt{\\frac{2DS}{H}}",
+      "variables": {"Q*": "Optimal order quantity", "D": "Annual demand", "S": "Order cost", "H": "Holding cost/unit/year"},
+      "source": "Harris, 1913"
+    },
+    {
+      "id": "NEWSVENDOR",
+      "name": "Newsvendor Model",
+      "latex": "Q^*=F^{-1}\\left(\\frac{p-c}{p}\\right)",
+      "variables": {"Q*": "Optimal quantity", "F⁻¹": "Inverse CDF", "p": "Selling price", "c": "Cost"},
+      "source": "Arrow et al., 1951"
+    },
+    {
+      "id": "NPV",
+      "name": "Net Present Value",
+      "latex": "NPV=\\sum_{t=0}^{n}\\frac{C_t}{(1+r)^t}",
+      "variables": {"NPV": "Net present value", "C_t": "Cash flow at time t", "r": "Discount rate", "n": "Periods"},
+      "source": "Finance Theory"
+    },
+    {
+      "id": "LCOE",
+      "name": "Levelized Cost of Energy",
+      "latex": "LCOE=\\frac{\\sum\\frac{I_t+M_t+F_t}{(1+r)^t}}{\\sum\\frac{E_t}{(1+r)^t}}",
+      "variables": {"I_t": "Investment cost", "M_t": "Maintenance", "F_t": "Fuel cost", "E_t": "Energy produced"},
+      "source": "IEA/NREL"
+    },
+    {
+      "id": "COBB_DOUGLAS",
+      "name": "Cobb-Douglas Production",
+      "latex": "Y=AK^\\alpha L^{1-\\alpha}",
+      "variables": {"Y": "Output", "A": "Technology factor", "K": "Capital", "L": "Labor", "α": "Capital share"},
+      "source": "Cobb & Douglas, 1928"
+    },
+    {
+      "id": "LEARNING_CURVE",
+      "name": "Learning Curve",
+      "latex": "C_n=C_1 n^{-\\alpha}",
+      "variables": {"C_n": "Cost of n-th unit", "C_1": "First unit cost", "n": "Cumulative units", "α": "Learning rate"},
+      "source": "Wright, 1936"
+    }
+  ]
+}

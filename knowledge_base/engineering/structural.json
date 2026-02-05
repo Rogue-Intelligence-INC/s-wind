@@ -1,0 +1,47 @@
+{
+  "domain": "Structural Engineering",
+  "formulas": [
+    {
+      "id": "EULER_BUCKLING",
+      "name": "Euler Buckling Load",
+      "latex": "P_{cr}=\\frac{\\pi^2 EI}{(KL)^2}",
+      "variables": {"P_cr": "Critical load (N)", "E": "Elastic modulus (Pa)", "I": "Moment of inertia (m⁴)", "K": "Effective length factor", "L": "Length (m)"},
+      "source": "Euler, 1744"
+    },
+    {
+      "id": "HOOKE",
+      "name": "Hooke's Law",
+      "latex": "\\sigma=E\\varepsilon",
+      "variables": {"σ": "Stress (Pa)", "E": "Young's modulus (Pa)", "ε": "Strain (dimensionless)"},
+      "source": "Hooke, 1678"
+    },
+    {
+      "id": "BEAM_DEFLECTION",
+      "name": "Beam Deflection",
+      "latex": "\\delta_{max}=\\frac{5wL^4}{384EI}",
+      "variables": {"δ": "Deflection (m)", "w": "Load/length (N/m)", "L": "Span (m)", "E": "Modulus", "I": "Moment of inertia"},
+      "source": "Euler-Bernoulli, 1750"
+    },
+    {
+      "id": "MOMENT_INERTIA_RECT",
+      "name": "Moment of Inertia (Rectangle)",
+      "latex": "I=\\frac{bh^3}{12}",
+      "variables": {"I": "Moment of inertia", "b": "Width", "h": "Height"},
+      "source": "Mechanics of Materials"
+    },
+    {
+      "id": "SHEAR_STRESS",
+      "name": "Shear Stress",
+      "latex": "\\tau=\\frac{VQ}{Ib}",
+      "variables": {"τ": "Shear stress", "V": "Shear force", "Q": "First moment of area", "I": "Moment of inertia", "b": "Width"},
+      "source": "Zhuravsky, 1855"
+    },
+    {
+      "id": "NATURAL_FREQ",
+      "name": "Natural Frequency",
+      "latex": "f_n=\\frac{1}{2\\pi}\\sqrt{\\frac{k}{m}}",
+      "variables": {"f_n": "Natural frequency (Hz)", "k": "Stiffness (N/m)", "m": "Mass (kg)"},
+      "source": "Vibration Theory"
+    }
+  ]
+}

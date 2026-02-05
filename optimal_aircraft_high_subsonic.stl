@@ -1,0 +1,30 @@
+solid optimal_aircraft_high_subsonic
+  facet normal 0 0 1
+    outer loop
+      vertex 0 0 0
+      vertex 3.5714285714285716 0 0
+      vertex 6.888124942564464 -15 0
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex 0 0 0
+      vertex 6.888124942564464 -15 0
+      vertex 5.459553513993035 -15 0
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex 0 0 0
+      vertex 3.5714285714285716 0 0
+      vertex 6.888124942564464 15 0
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex 0 0 0
+      vertex 6.888124942564464 15 0
+      vertex 5.459553513993035 15 0
+    endloop
+  endfacet
+endsolid optimal_aircraft_high_subsonic

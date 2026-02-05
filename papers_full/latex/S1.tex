@@ -1,0 +1,34 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Optimization of Targeted Poverty Alleviation Strategies}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 75,411 configurations for optimization of targeted poverty alleviation strategies. Complete 8-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize poverty exit rate per unit investment
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Poverty line & $$ & $PL = $2.15/day (2017 PPP)$ & World Bank & International standard\\\hline
+2 & Industrial income & $r_ind, I$ & $ΔY_ind = α_ind × r_ind × I$ & Multiplier & Job creation\\\hline
+3 & Education return & $r_edu, I, t$ & $ΔY_edu = α_edu × r_edu × I × (1+g)^t$ & Human capital & Compounding\\\hline
+4 & Training return & $r_train, I$ & $ΔY_train = α_train × r_train × I$ & Skills & Employability\\\hline
+5 & Infrastructure effect & $r_infra$ & $μ = 1 + β × r_infra$ & Multiplier & Enables other activities\\\hline
+6 & Microloan return & $L_m$ & $ΔY_micro = γ × L_m × (1-default)$ & Capital & Small business\\\hline
+7 & Total income & $ΔY_*$ & $ΔY = μ × Σ ΔY_i$ & Aggregation & All channels\\\hline
+8 & Exit probability & $ΔY, Y_0$ & $P(exit) = Φ((Y_0+ΔY-PL)/σ)$ & Probit & Income distribution\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 200.1600
+
+\end{document}

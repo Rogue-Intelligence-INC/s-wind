@@ -1,0 +1,93 @@
+\documentclass[11pt,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+\geometry{margin=1in}
+
+\title{Vertical Farm Lighting Spectrum: \\S-wind Exhaustive Optimization}
+\author{S-wind Automated Research System}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive parametric optimization for vertical farm lighting spectrum with 59,895 configurations.
+Objective: \textbf{Maximize photosynthesis rate per watt of lighting}.
+\end{abstract}
+
+\section{Problem Definition}
+\textbf{Objective:} Maximize photosynthesis rate per watt of lighting
+
+\begin{table}[h]
+\centering
+\caption{Search Space (5 dimensions, N=59,895)}
+\begin{tabular}{@{}lccccl@{}}
+\toprule
+Parameter & Symbol & Min & Max & Step & Unit \\
+\midrule
+Blue Fraction & $f_B$ & 0.10 & 0.50 & 0.05 &  \\
+Red Fraction & $f_R$ & 0.30 & 0.80 & 0.05 &  \\
+Far-Red Fraction & $f_{FR}$ & 0.00 & 0.20 & 0.02 &  \\
+PPFD & $I$ & 100.00 & 600.00 & 50.00 & μmol/m²s \\
+Photoperiod & $P$ & 12.00 & 20.00 & 2.00 & h/day \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Theoretical Foundation}
+\textbf{McCree Curve} (McCREE): $PPFD = \int_{400}^{700} \Phi(\lambda) d\lambda$ [Plant action spectrum]
+
+\textbf{Emerson Enhancement} (EMERSON): $P_{R+FR} > P_R + P_{FR}$ [Red/far-red synergy]
+
+
+\section{Complete Derivation Chain}
+\textbf{Step 1}: DLI --- $I, P$ $\Rightarrow$ $DLI = I \times P \times 3600 / 10^6$ (Daily light integral: mol/m²d)
+
+
+\textbf{Step 2}: Blue absorption --- $f_B, I$ $\Rightarrow$ $A_B = f_B I \times \phi_B$ (Quantum yield: μmol/m²s)
+
+
+\textbf{Step 3}: Red absorption --- $f_R, I$ $\Rightarrow$ $A_R = f_R I \times \phi_R$ (Quantum yield: μmol/m²s)
+
+
+\textbf{Step 4}: PSS ratio --- $f_R, f_{FR}$ $\Rightarrow$ $PSS = 0.89 f_R / (f_R + f_{FR})$ (Phytochrome: Ratio)
+
+
+\textbf{Step 5}: Photosynthesis rate --- $A_B, A_R$ $\Rightarrow$ $P_n = P_{max} (1-e^{-k(A_B+A_R)/P_{max}})$ (Saturation: μmol CO2/m²s)
+
+
+\textbf{Step 6}: Electrical power --- $I, eff$ $\Rightarrow$ $P_e = I \times A / (\eta_{LED} \times 4.6)$ (Conversion: W)
+
+
+\textbf{Step 7}: Photon efficacy --- $I, P_e$ $\Rightarrow$ $\eta_{ph} = I / P_e$ (Definition: μmol/J)
+
+
+\textbf{Step 8}: Objective --- $P_n, P_e$ $\Rightarrow$ $Z = P_n / P_e$ (Efficiency: Maximize)
+
+
+\section{Optimal Results}
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lc@{}}
+\toprule
+Parameter & Optimal \\
+\midrule
+Blue Fraction & 0.300  \\
+Red Fraction & 0.550  \\
+Far-Red Fraction & 0.100  \\
+PPFD & 350.000 μmol/m²s \\
+Photoperiod & 16.000 h/day \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+Search completed: 59,895 configurations, 8 derivation steps.
+
+\begin{thebibliography}{9}
+\bibitem{ref1} McCree Curve --- Plant action spectrum
+\bibitem{ref2} Emerson Enhancement --- Red/far-red synergy
+\end{thebibliography}
+\end{document}

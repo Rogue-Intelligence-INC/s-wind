@@ -1,0 +1,35 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{AI Accelerator Dataflow Mapping: Tiling and Reuse}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 2,097,152 configurations for ai accelerator dataflow mapping: tiling and reuse. Complete 9-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize energy-delay product
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & GEMM FLOPs & $M, N, K$ & $F = 2MNK$ & Definition & Matrix multiply\\\hline
+2 & Tile buffer & $T_M, T_N, T_K$ & $B = T_M×T_K + T_K×T_N + T_M×T_N$ & Tiling & A, B, C tiles\\\hline
+3 & Reuse factor & $M, N, K, T_*$ & $R = MNK/(tiles×tile_size)$ & Reuse & Data reuse ratio\\\hline
+4 & DRAM accesses & $F, R$ & $A_dram = F / R$ & Traffic & Off-chip accesses\\\hline
+5 & Energy compute & $F, E_mac$ & $E_comp = F × E_mac$ & Compute & MAC energy\\\hline
+6 & Energy memory & $A_dram, E_dram$ & $E_mem = A_dram × E_dram$ & Memory & DRAM energy\\\hline
+7 & Total energy & $E_comp, E_mem$ & $E = E_comp + E_mem$ & Sum & Total energy\\\hline
+8 & Latency & $F, P, f$ & $T = F / (P × f)$ & Parallelism & Execution time\\\hline
+9 & EDP & $E, T$ & $EDP = E × T$ & Objective & Energy-delay product\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 60.8000
+
+\end{document}

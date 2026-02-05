@@ -1,0 +1,47 @@
+{
+  "domain": "Materials Mechanics",
+  "formulas": [
+    {
+      "id": "HALL_PETCH",
+      "name": "Hall-Petch Relation",
+      "latex": "\\sigma_y=\\sigma_0+\\frac{k_y}{\\sqrt{d}}",
+      "variables": {"σ_y": "Yield strength", "σ_0": "Friction stress", "k_y": "Strengthening coefficient", "d": "Grain size"},
+      "source": "Hall, 1951; Petch, 1953"
+    },
+    {
+      "id": "ARRHENIUS",
+      "name": "Arrhenius Equation",
+      "latex": "k=Ae^{-E_a/(RT)}",
+      "variables": {"k": "Rate constant", "A": "Pre-exponential factor", "E_a": "Activation energy", "R": "Gas constant", "T": "Temperature"},
+      "source": "Arrhenius, 1889"
+    },
+    {
+      "id": "GRIFFITH",
+      "name": "Griffith Fracture Criterion",
+      "latex": "\\sigma_f=\\sqrt{\\frac{2E\\gamma}{\\pi a}}",
+      "variables": {"σ_f": "Fracture stress", "E": "Young's modulus", "γ": "Surface energy", "a": "Crack length"},
+      "source": "Griffith, 1921"
+    },
+    {
+      "id": "PARIS_LAW",
+      "name": "Paris-Erdogan Law",
+      "latex": "\\frac{da}{dN}=C(\\Delta K)^m",
+      "variables": {"a": "Crack length", "N": "Cycles", "C,m": "Material constants", "ΔK": "Stress intensity range"},
+      "source": "Paris & Erdogan, 1963"
+    },
+    {
+      "id": "STRESS_INTENSITY",
+      "name": "Stress Intensity Factor",
+      "latex": "K=Y\\sigma\\sqrt{\\pi a}",
+      "variables": {"K": "Stress intensity factor", "Y": "Geometry factor", "σ": "Applied stress", "a": "Crack length"},
+      "source": "Irwin, 1957"
+    },
+    {
+      "id": "CREEP",
+      "name": "Creep Rate",
+      "latex": "\\dot{\\varepsilon}=A\\sigma^n e^{-Q/(RT)}",
+      "variables": {"ε̇": "Creep rate", "A": "Material constant", "σ": "Stress", "n": "Stress exponent", "Q": "Activation energy"},
+      "source": "Norton, 1929"
+    }
+  ]
+}

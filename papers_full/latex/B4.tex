@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Mixture of Experts Router Load Balancing}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 774,400 configurations for mixture of experts router load balancing. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize throughput subject to no expert overload
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Token distribution & $T, E$ & $n_i ~ Multinomial(T, p)$ & Routing & Tokens per expert\\\hline
+2 & Capacity & $T, E, C_f$ & $C = (T/E)×C_f$ & Capacity & Max tokens per expert\\\hline
+3 & Overflow & $n_i, C$ & $O = Σmax(0, n_i - C)$ & Truncation & Dropped tokens\\\hline
+4 & Throughput & $T, O$ & $T_eff = (T - O)/T$ & Definition & Effective throughput\\\hline
+5 & Compute FLOPs & $T, K, F_exp$ & $F = T×K×F_exp$ & Sparse & Only K experts activated\\\hline
+6 & Aux loss & $p$ & $L_aux = E×Σp²$ & Load balancing & Entropy regularizer\\\hline
+7 & Total loss & $L_main, L_aux, α$ & $L = L_main + α×L_aux$ & Combined & Training objective\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 2.0306
+
+\end{document}

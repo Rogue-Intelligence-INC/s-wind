@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{CPU Microarchitecture Parameter Exhaustive Search}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 50,960 configurations for cpu microarchitecture parameter exhaustive search. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize IPC subject to power < 150W
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & ILP extraction & $ROB, IW$ & $ILP = min(ILP_app, ROB/10, IW)$ & Bottleneck & Instruction parallelism\\\hline
+2 & Cache miss rate & $L1, L2, L3$ & $m = m_L1×m_L2|L1×m_L3|L2$ & Hierarchy & Conditional miss rates\\\hline
+3 & Memory stalls & $m, latency$ & $S_mem = m × L_mem$ & Stalls & Memory delay cycles\\\hline
+4 & Branch penalty & $BP, rate$ & $S_br = (1-acc(BP))×rate×penalty$ & Misprediction & Branch stalls\\\hline
+5 & Effective IPC & $ILP, S_*$ & $IPC = ILP/(1 + S_mem + S_br)$ & Amdahl & Stall-adjusted IPC\\\hline
+6 & Dynamic power & $IPC, V, f$ & $P_dyn = C×V²×f×IPC$ & CMOS & Activity-dependent\\\hline
+7 & Total power & $P_dyn, P_leak$ & $P = P_dyn + P_leak$ & Sum & Dynamic + leakage\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 76.6667
+
+\end{document}

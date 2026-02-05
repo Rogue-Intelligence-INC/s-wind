@@ -1,0 +1,34 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Cost Optimization for Large Language Model Inference}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 2,097,152 configurations for cost optimization for large language model inference. Complete 8-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize latency × power / throughput
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Model memory & $N, P$ & $M_model = N×P/8$ & Definition & Bits to bytes\\\hline
+2 & KV cache & $B, L, d, n$ & $M_kv = 2BLdn×P/8$ & Architecture & K and V per layer\\\hline
+3 & Compression & $M_kv, r$ & $M_kv' = M_kv×r$ & Compression & Quantization\\\hline
+4 & Total memory & $M_m, M_kv, TP$ & $M = M_m/TP + M_kv'$ & Sharding & Model sharded\\\hline
+5 & FLOPs/token & $N$ & $F = 2N$ & Standard & ~2 FLOPs/param\\\hline
+6 & Compute throughput & $F, TFLOPS, B$ & $T_c = TFLOPS×10¹²×B/F$ & Roofline & Compute bound\\\hline
+7 & Memory throughput & $M, BW, B$ & $T_m = BW×B/M$ & Bandwidth & Memory bound\\\hline
+8 & Effective throughput & $T_c, T_m$ & $T = min(T_c, T_m)$ & Bottleneck & Slower dominates\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 104.4800
+
+\end{document}

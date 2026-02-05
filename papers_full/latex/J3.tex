@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{CRISPR Gene Editing Parameter Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 23,100 configurations for crispr gene editing parameter optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize on-target efficiency subject to off-target < 1\%
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Binding energy & $L, GC, T$ & $ΔG = ΔH - TΔS$ & Thermodynamics & Gibbs free energy\\\hline
+2 & On-target activity & $ΔG, D$ & $η_on = 1 - exp(-k×D×exp(-ΔG/RT))$ & Kinetics & Michaelis-Menten\\\hline
+3 & Off-target score & $mismatches$ & $OT = Σ f(pos, type)×exp(-ΔΔG)$ & CFD & Cutting frequency\\\hline
+4 & Specificity & $η_on, OT$ & $S = η_on / (η_on + OT)$ & Definition & On/total\\\hline
+5 & Editing efficiency & $η_on, t$ & $E = η_on × (1 - exp(-t/τ))$ & Kinetics & Time-dependent\\\hline
+6 & Toxicity & $D, t$ & $Tox = 1 - exp(-D×t/τ_tox)$ & Dose-response & Cytotoxicity\\\hline
+7 & Objective & $E, S, Tox$ & $max E × S × (1 - Tox)$ & Multi-objective & Efficiency × safety\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 12.1100
+
+\end{document}

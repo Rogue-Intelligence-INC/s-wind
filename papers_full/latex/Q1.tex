@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Carbon Capture and Storage Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 179,685 configurations for carbon capture and storage optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize cost per ton CO2 captured
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & CO2 loading & $C_sol, P_CO2$ & $α = f(C_sol, P_CO2)$ & Equilibrium & Solvent chemistry\\\hline
+2 & Mass transfer & $k_G, a, H$ & $N = k_G × a × H × ΔP$ & Film theory & Absorption rate\\\hline
+3 & Heat of absorption & $α$ & $Q_abs = -ΔH_abs × Δα$ & Thermodynamics & Exothermic reaction\\\hline
+4 & Regeneration heat & $T_reg, C_sol$ & $Q_reg = c_p×m×ΔT + Q_des$ & Energy & Sensible + latent\\\hline
+5 & Pumping energy & $v_g, ΔP, η$ & $W_pump = v_g×A×ΔP/η$ & Fluid mechanics & Pressure drop\\\hline
+6 & Total energy & $Q_reg, W_pump$ & $E = Q_reg + W_pump$ & Sum & Per ton CO2\\\hline
+7 & Cost & $E, CAPEX$ & $$/tCO2 = E×p_E + CAPEX/N$ & Economics & LCOC\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 27.1900
+
+\end{document}

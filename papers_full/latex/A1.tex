@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Optimal Structural Design for 30-Story High-Rise Buildings}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 74,880 configurations for optimal structural design for 30-story high-rise buildings. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize steel consumption subject to safety factor > 1.5
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Define total height & $n, h_f$ & $H = n × h_f$ & Definition & 30 floors times floor height\\\hline
+2 & Calculate floor area & $L_c$ & $A_f = (4L_c)²$ & Geometry & 4 bays each direction\\\hline
+3 & Determine lateral stiffness & $I_core, K_f$ & $EI = EI_c + K_f×EI_f$ & Superposition & Parallel system\\\hline
+4 & Fundamental period & $H, EI, m$ & $T = 2π√(mH³/3EI)$ & Cantilever & Fixed-base approximation\\\hline
+5 & Seismic base shear & $T, W, S_DS$ & $V = C_s × W$ & ASCE 7 Eq.12.8-1 & Equivalent lateral force\\\hline
+6 & Inter-story drift & $V, EI, H$ & $θ = VH²/3EI$ & Elastic & Cantilever deflection\\\hline
+7 & Steel weight per area & $r_c, L_c, r_b$ & $W_s = 80+200r_c+50L_c/8$ & Semi-empirical & Statistical regression\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 2.1470
+
+\end{document}

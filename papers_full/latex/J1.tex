@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Hospital Operating Room Scheduling Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 14,700 configurations for hospital operating room scheduling optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize utilization subject to overtime < 10\%
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Available time & $B, n_OR$ & $T_avail = B × n_OR × 60$ & Definition & Total OR-minutes\\\hline
+2 & Case duration & $case_type$ & $μ, σ ~ LogNormal$ & Statistics & Historical data\\\hline
+3 & Scheduled time & $cases, μ$ & $T_sched = Σ (μ_i + τ_buf)$ & Sum & With buffer\\\hline
+4 & Utilization & $T_sched, T_avail$ & $U = T_sched / T_avail$ & Definition & Efficiency\\\hline
+5 & Overtime probability & $T, σ, B$ & $P(OT) = 1 - Φ((B-T)/σ)$ & Normal & Tail probability\\\hline
+6 & Urgency weighting & $cases, w$ & $Score = Σ w_i × priority_i$ & Objective & Weighted sum\\\hline
+7 & Objective & $U, P(OT), Score$ & $max U × Score - λ × P(OT)$ & Trade-off & Multi-objective\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 4.0100
+
+\end{document}

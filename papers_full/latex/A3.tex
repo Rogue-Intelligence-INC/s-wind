@@ -1,0 +1,32 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Next-Generation WiFi 7/8 Wireless Communication Parameter Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 526,848 configurations for next-generation wifi 7/8 wireless communication parameter optimization. Complete 6-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize throughput subject to latency < 1ms
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Channel capacity & $BW, SNR$ & $C = BW×log₂(1+SNR)$ & Shannon & Theoretical limit\\\hline
+2 & SNR calculation & $P_tx, N_0, d$ & $SNR = P_tx - L(d) - N_0$ & Link budget & Path loss model\\\hline
+3 & Spectral efficiency & $MCS$ & $SE(MCS) = table lookup$ & Standard & 802.11be table\\\hline
+4 & MIMO gain & $N_ss$ & $G_MIMO = min(N_ss, N_rx)$ & MIMO theory & Spatial multiplexing\\\hline
+5 & Throughput & $SE, BW, G$ & $T = SE×BW×G×η$ & System & With overhead factor\\\hline
+6 & Latency & $T, L_pkt$ & $τ = L_pkt/T + τ_proc$ & Queueing & Transmission + processing\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 8.1600
+
+\end{document}

@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Next-Generation Commercial Aircraft Aerodynamic Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 982,800 configurations for next-generation commercial aircraft aerodynamic optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize L/D ratio subject to structural constraints
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Oswald efficiency & $AR, Λ, λ$ & $e = 1.78(1-0.045AR^0.68)-0.64$ & Raymer & Span efficiency\\\hline
+2 & Induced drag factor & $AR, e$ & $K = 1/(πeAR)$ & First principles & Induced drag coefficient\\\hline
+3 & Zero-lift drag & $t/c, Λ, S_wet$ & $C_D0 = C_f×FF×S_wet/S_ref$ & Semi-empirical & Form factor method\\\hline
+4 & Optimal C\_L & $C_D0, K$ & $C_L,opt = √(C_D0/K)$ & Calculus & d(L/D)/dC\_L = 0\\\hline
+5 & Maximum L/D & $C_D0, K$ & $(L/D)_max = 1/(2√(C_D0×K))$ & Result & Substitution\\\hline
+6 & Camber effect & $f/c$ & $ΔC_D = k|C_L - C_L,design|²$ & Drag bucket & Off-design penalty\\\hline
+7 & Structural weight & $AR, t/c$ & $W_wing ∝ AR^1.5 × (t/c)^-0.4$ & Empirical & Torenbeek\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 5.7030
+
+\end{document}

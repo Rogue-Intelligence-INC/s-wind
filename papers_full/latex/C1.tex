@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Battery Fast Charging Strategy Under Lifetime Constraints}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 243,360 configurations for battery fast charging strategy under lifetime constraints. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Minimize charging time subject to < 20\% capacity fade
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & CC phase time & $Q, I_cc$ & $t_cc = Q×SoC_cv/I_cc$ & Definition & Time to CV threshold\\\hline
+2 & CV phase time & $V_cv, I_term, τ$ & $t_cv = τ×ln(I_cc/I_term)$ & Exponential & CV charging model\\\hline
+3 & Total time & $t_cc, t_cv$ & $t = t_cc + t_cv$ & Sum & Total charging time\\\hline
+4 & Heat generation & $I, R$ & $Q_heat = I²R$ & Joule & Ohmic heating\\\hline
+5 & Temperature rise & $Q_heat, C_th, h$ & $ΔT = Q_heat/(h×A)$ & Thermal & Heat transfer\\\hline
+6 & SEI growth & $I, T, t$ & $δ_SEI ∝ √t × exp(-E_a/RT)$ & Kinetics & Arrhenius\\\hline
+7 & Capacity fade & $δ_SEI, N$ & $Q_loss = k × δ_SEI × N$ & Degradation & Cycle aging\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 5.0960
+
+\end{document}

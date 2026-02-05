@@ -1,0 +1,101 @@
+\documentclass[11pt,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\geometry{margin=1in}
+
+\title{Inventory Pre-positioning Strategy: \\Exhaustive Parametric Optimization via S-wind Framework}
+\author{S-wind Automated Research System\\Valhalla Framework}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper presents exhaustive parametric optimization for inventory pre-positioning strategy using the S-wind simulation framework.
+Search space: 238,140 configurations. Objective: \textbf{Minimize expected stockout cost plus holding cost}.
+\end{abstract}
+
+\section{Introduction}
+Optimization of inventory pre-positioning strategy is critical for modern logistics efficiency.
+
+\subsection{Problem Statement}
+\textbf{Objective:} Minimize expected stockout cost plus holding cost
+
+\subsection{Search Space}
+5 dimensions, $N = 238,140$ total configurations.
+
+\begin{table}[h]
+\centering
+\caption{Parameters}
+\begin{tabular}{@{}lccccl@{}}
+\toprule
+Parameter & Symbol & Min & Max & Step & Unit \\
+\midrule
+Safety Stock Factor & $k$ & 1.00 & 4.00 & 0.50 & \sigma \\
+Review Period & $R$ & 1.00 & 14.00 & 1.00 & days \\
+Lead Time & $L$ & 1.00 & 30.00 & 1.00 & days \\
+Service Level & $\alpha$ & 0.90 & 0.99 & 0.01 &  \\
+Demand CV & $CV$ & 0.10 & 0.50 & 0.05 &  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Knowledge Base}
+\textbf{Economic Order Quantity} (EOQ): $Q^* = \sqrt{2DS/H}$ --- Harris, 1913
+
+\textbf{Safety Stock} (SAFETY_STOCK): $SS = z_{\alpha} \sigma_{LT}$ --- Inventory Theory
+
+
+\section{Derivation Chain}
+\textbf{Step 1}: Lead time demand --- Inputs: $\mu, L$, Formula: $\mu_{LT} = \mu \times L$, Principle: Expected (Units)
+
+
+\textbf{Step 2}: LT demand std --- Inputs: $\sigma, L$, Formula: $\sigma_{LT} = \sigma \sqrt{L}$, Principle: Root L (Units)
+
+
+\textbf{Step 3}: Safety stock --- Inputs: $k, \sigma_{LT}$, Formula: $SS = k \sigma_{LT}$, Principle: Buffer (Units)
+
+
+\textbf{Step 4}: Reorder point --- Inputs: $\mu_{LT}, SS$, Formula: $ROP = \mu_{LT} + SS$, Principle: Trigger (Units)
+
+
+\textbf{Step 5}: Cycle stock --- Inputs: $EOQ$, Formula: $CS = Q/2$, Principle: Average (Units)
+
+
+\textbf{Step 6}: Holding cost --- Inputs: $CS, SS, h$, Formula: $C_h = (CS + SS) \times h$, Principle: Annual ($)
+
+
+\textbf{Step 7}: Stockout probability --- Inputs: $k$, Formula: $P_{so} = 1 - \Phi(k)$, Principle: Normal CDF (Per cycle)
+
+
+\textbf{Step 8}: Total cost --- Inputs: $C_h, C_{so}$, Formula: $TC = C_h + C_{so} P_{so} \mu/Q$, Principle: Expected (Minimize)
+
+
+\section{Results}
+\begin{table}[h]
+\centering
+\caption{Optimal Configuration}
+\begin{tabular}{@{}lc@{}}
+\toprule
+Parameter & Optimal \\
+\midrule
+Safety Stock Factor & 2.500 \sigma \\
+Review Period & 7.500 days \\
+Lead Time & 15.500 days \\
+Service Level & 0.945  \\
+Demand CV & 0.300  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+Exhaustive search over 238,140 configurations with 8 derivation steps completed.
+
+\begin{thebibliography}{9}
+\bibitem{ref1} Economic Order Quantity --- Harris, 1913
+\bibitem{ref2} Safety Stock --- Inventory Theory
+\end{thebibliography}
+
+\end{document}

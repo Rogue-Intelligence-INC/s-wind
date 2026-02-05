@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Tokamak Fusion Reactor Plasma Confinement Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 650,496 configurations for tokamak fusion reactor plasma confinement optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize fusion power subject to stability constraints
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Plasma volume & $R, a$ & $V = 2π²Ra²$ & Torus & Toroidal volume\\\hline
+2 & Confinement time & $a, I, n, T$ & $τ_E = H × τ_ITER98$ & Scaling & H-mode\\\hline
+3 & Triple product & $n, T, τ$ & $nTτ$ & Lawson & Ignition criterion\\\hline
+4 & Fusion power & $n, T, V$ & $P_fus = ⟨σv⟩ × n² × E_α × V$ & Reaction & D-T fusion rate\\\hline
+5 & Beta & $n, T, B$ & $β = 2μ₀nT/B²$ & Definition & Plasma pressure ratio\\\hline
+6 & Greenwald density & $I, a$ & $n_G = I/(πa²)$ & Limit & Density limit\\\hline
+7 & Q factor & $P_fus, P_aux$ & $Q = P_fus / P_aux$ & Gain & Energy multiplication\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 5.0000
+
+\end{document}

@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Digital Divide Bridging: Rural Connectivity Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 14,520 configurations for digital divide bridging: rural connectivity optimization. Complete 7-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize coverage subject to cost per household
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Fiber reach & $r_fiber, HH$ & $HH_fiber = r_fiber × HH_total$ & Definition & Fiber homes\\\hline
+2 & Wireless reach & $D_tower, A$ & $HH_wireless = f(D_tower, A, terrain)$ & Propagation & Cell coverage\\\hline
+3 & Total coverage & $HH_*$ & $C = (HH_fiber + HH_wireless)/HH_total$ & Aggregation & Unique coverage\\\hline
+4 & Fiber cost & $HH_fiber, d$ & $C_fiber = HH_fiber × (c_0 + c_1×d)$ & Infrastructure & Distance-dependent\\\hline
+5 & Tower cost & $D_tower, A$ & $C_tower = D_tower × A × c_tower$ & Deployment & Capital cost\\\hline
+6 & Operating cost & $C_*, t$ & $OpEx = (C_fiber + C_tower) × r_opex × t$ & O\&M & Annual cost\\\hline
+7 & Cost per HH & $Total, HH_served$ & $$/HH = Total / HH_served$ & Unit cost & Economics\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 5.8200
+
+\end{document}

@@ -1,0 +1,300 @@
+[package]
+name = "s-wind-sim"
+version = "0.1.0"
+edition = "2021"
+description = "S-wind: Complete Exact Algebraic Simulation - EPR (Infinite Precision)"
+
+[lib]
+name = "s_wind"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = "0.4"
+rayon = "1.10"
+
+# Voyager for pattern detection
+voyager = { path = "../utils/voyager" }
+
+# Examples
+[[example]]
+name = "knowledge_demo"
+path = "examples/knowledge_demo.rs"
+
+# Core Binaries
+[[bin]]
+name = "swind"
+path = "src/bin/swind.rs"
+
+[[bin]]
+name = "swind_mount"
+path = "src/bin/swind_mount.rs"
+
+[[bin]]
+name = "fate_experiment"
+path = "src/bin/fate_experiment.rs"
+
+[[bin]]
+name = "fate_exhaustive_latex"
+path = "src/bin/fate_exhaustive_latex.rs"
+
+[[bin]]
+name = "load_oeis"
+path = "src/bin/load_oeis.rs"
+
+[[bin]]
+name = "run_experiments"
+path = "src/bin/run_experiments.rs"
+
+[[bin]]
+name = "test_discovery"
+path = "src/bin/test_discovery.rs"
+
+# Blondle Knowledge
+[[bin]]
+name = "blondle_demo"
+path = "src/bin/blondle_demo.rs"
+
+[[bin]]
+name = "blondle_problems"
+path = "src/bin/blondle_problems.rs"
+
+[[bin]]
+name = "blondle_report"
+path = "src/bin/blondle_report.rs"
+
+# Industrial Applications
+[[bin]]
+name = "industrial_demos"
+path = "src/bin/industrial_demos.rs"
+
+# 3D Generators
+[[bin]]
+name = "car_3d_generator"
+path = "src/bin/car_3d_generator.rs"
+
+[[bin]]
+name = "aircraft_3d_generator"
+path = "src/bin/aircraft_3d_generator.rs"
+
+[[bin]]
+name = "fleet_generator"
+path = "src/bin/fleet_generator.rs"
+
+[[bin]]
+name = "aero_optimal_discovery"
+path = "src/bin/aero_optimal_discovery.rs"
+
+# Design Optimization
+[[bin]]
+name = "auto_design_optimal"
+path = "src/bin/auto_design_optimal.rs"
+
+# Medical/Pharma
+[[bin]]
+name = "biomedical_optimal"
+path = "src/bin/biomedical_optimal.rs"
+
+[[bin]]
+name = "comprehensive_medical_optimal"
+path = "src/bin/comprehensive_medical_optimal.rs"
+
+# Frontier Science
+[[bin]]
+name = "chip_design_discovery"
+path = "src/bin/chip_design_discovery.rs"
+
+[[bin]]
+name = "frontier_chemistry"
+path = "src/bin/frontier_chemistry.rs"
+
+[[bin]]
+name = "frontier_chemistry_derivation"
+path = "src/bin/frontier_chemistry_derivation.rs"
+
+[[bin]]
+name = "frontier_biology_derivation"
+path = "src/bin/frontier_biology_derivation.rs"
+
+[[bin]]
+name = "frontier_physics_exploration"
+path = "src/bin/frontier_physics_exploration.rs"
+
+[[bin]]
+name = "fundamental_mysteries"
+path = "src/bin/fundamental_mysteries.rs"
+
+# Origin of Life
+[[bin]]
+name = "life_origin_chemistry"
+path = "src/bin/life_origin_chemistry.rs"
+
+[[bin]]
+name = "astrobiology_report"
+path = "src/bin/astrobiology_report.rs"
+
+# Hardcore Experiments
+[[bin]]
+name = "proper_hardcore_experiments"
+path = "src/bin/proper_hardcore_experiments.rs"
+
+[[bin]]
+name = "algebraic_unified_theory"
+path = "src/bin/algebraic_unified_theory.rs"
+
+# MeshBrain Dimension Experiment
+[[bin]]
+name = "meshbrain_dimension_experiment"
+path = "src/bin/meshbrain_dimension_experiment.rs"
+
+# Exhaustive Avalanche vs Dimension Experiment
+[[bin]]
+name = "avalanche_dimension_exhaustive"
+path = "src/bin/avalanche_dimension_exhaustive.rs"
+
+# Fusion Algebra
+[[bin]]
+name = "fusion_algebra"
+path = "src/bin/fusion_algebra.rs"
+
+# Fusion Blind Discovery (no presuppositions)
+[[bin]]
+name = "fusion_blind_discovery"
+path = "src/bin/fusion_blind_discovery.rs"
+
+# Unified Theory Blind Exploration (no presuppositions)
+[[bin]]
+name = "unified_blind_exploration"
+path = "src/bin/unified_blind_exploration.rs"
+
+# Alpha Running Conjecture Test
+[[bin]]
+name = "alpha_running_conjecture"
+path = "src/bin/alpha_running_conjecture.rs"
+
+# Conjecture Explorer with Auto-Model Generation
+[[bin]]
+name = "conjecture_explorer"
+path = "src/bin/conjecture_explorer.rs"
+[[bin]]
+name = "unified_theory_test"
+path = "src/bin/unified_theory_test.rs"
+[[bin]]
+name = "unified_theory_complete"
+path = "src/bin/unified_theory_complete.rs"
+[[bin]]
+name = "algebraic_exhaustive_exploration"
+path = "src/bin/algebraic_exhaustive_exploration.rs"
+[[bin]]
+name = "unified_multi_constant_search"
+path = "src/bin/unified_multi_constant_search.rs"
+[[bin]]
+name = "exhaustive_unified_search"
+path = "src/bin/exhaustive_unified_search.rs"
+
+# S-wind Unified Exploration (uses core Conjecture system)
+[[bin]]
+name = "swind_unified_exploration"
+path = "src/bin/swind_unified_exploration.rs"
+
+# Algebraic Unified Theory (EPR only, no f64)
+[[bin]]
+name = "algebraic_unified_theory_epr"
+path = "src/bin/algebraic_unified_theory_epr.rs"
+
+# S-wind Algebraic Exhaustive (Auto-create containers + exhaustive search)
+[[bin]]
+name = "swind_algebraic_exhaustive"
+path = "src/bin/swind_algebraic_exhaustive.rs"
+
+# Iterative Exhaustive Proof System
+[[bin]]
+name = "iterative_exhaustive_proof"
+path = "src/bin/iterative_exhaustive_proof.rs"
+
+# S-wind Unified Proof (Native S-wind capabilities)
+[[bin]]
+name = "swind_unified_proof"
+path = "src/bin/swind_unified_proof.rs"
+
+# S-wind Full Exhaustive (Complete exploration)
+[[bin]]
+name = "swind_full_exhaustive"
+path = "src/bin/swind_full_exhaustive.rs"
+
+# S-wind Selection Principle (Why this polynomial?)
+[[bin]]
+name = "swind_selection_principle"
+path = "src/bin/swind_selection_principle.rs"
+
+# S-wind D-Particle Mapping (Why D=X corresponds to particle Y?)
+[[bin]]
+name = "swind_d_particle_mapping"
+path = "src/bin/swind_d_particle_mapping.rs"
+
+[[bin]]
+name = "swind_representation_theory"
+path = "src/bin/swind_representation_theory.rs"
+
+[[bin]]
+name = "swind_physical_mechanism"
+path = "src/bin/swind_physical_mechanism.rs"
+
+[[bin]]
+name = "swind_uniqueness_from_physics"
+path = "src/bin/swind_uniqueness_from_physics.rs"
+
+[[bin]]
+name = "swind_model_generator"
+path = "src/bin/swind_model_generator.rs"
+
+[[bin]]
+name = "swind_dual_polynomial_theory"
+path = "src/bin/swind_dual_polynomial_theory.rs"
+
+[[bin]]
+name = "swind_dual_polynomial_exact"
+path = "src/bin/swind_dual_polynomial_exact.rs"
+
+[[bin]]
+name = "swind_unified_model"
+path = "src/bin/swind_unified_model.rs"
+
+[[bin]]
+name = "swind_unified_model_v2"
+path = "src/bin/swind_unified_model_v2.rs"
+
+[[bin]]
+name = "swind_prediction_search"
+path = "src/bin/swind_prediction_search.rs"
+
+[[bin]]
+name = "swind_critical_discovery"
+path = "src/bin/swind_critical_discovery.rs"
+
+[[bin]]
+name = "swind_23_and_w_boson"
+path = "src/bin/swind_23_and_w_boson.rs"
+
+[[bin]]
+name = "swind_alpha_square_discovery"
+path = "src/bin/swind_alpha_square_discovery.rs"
+
+[[bin]]
+name = "swind_physical_origin"
+path = "src/bin/swind_physical_origin.rs"
+
+[[bin]]
+name = "swind_higgs_search"
+path = "src/bin/swind_higgs_search.rs"
+
+# Algebraic Unified Search (代数优先)
+[[bin]]
+name = "algebraic_unified_search"
+path = "src/bin/algebraic_unified_search.rs"
+
+# Verify Historical Discoveries
+[[bin]]
+name = "verify_discoveries"
+path = "src/bin/verify_discoveries.rs"

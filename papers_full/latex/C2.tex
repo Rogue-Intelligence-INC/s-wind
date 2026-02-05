@@ -1,0 +1,32 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Battery Chemistry Formulation Screening}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 4,480 configurations for battery chemistry formulation screening. Complete 6-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize energy density subject to safety and cost
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Theoretical capacity & $x_Ni, x_Co, x_Mn$ & $Q_th = Σx_i×Q_i$ & Weighted & Redox contribution\\\hline
+2 & Voltage profile & $x_*$ & $V = f(x_Ni, x_Co, x_Mn)$ & Empirical & Chemistry-dependent\\\hline
+3 & Energy density & $Q, V, ρ$ & $E = Q×V/m$ & Definition & Wh/kg\\\hline
+4 & Stability & $x_Ni$ & $T_onset = 300 - 100×x_Ni$ & Semi-empirical & Ni destabilizes\\\hline
+5 & Cost & $x_*$ & $$ = Σx_i × p_i$ & Weighted & Material cost\\\hline
+6 & Coating effect & $t_c$ & $η_c = 1 - k×t_c$ & Passivation & Interface resistance\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 0.5800
+
+\end{document}

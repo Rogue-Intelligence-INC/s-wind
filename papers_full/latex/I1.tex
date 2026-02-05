@@ -1,0 +1,34 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,longtable,geometry,hyperref}
+\geometry{margin=1in}
+\title{Mars Habitat Module Design Optimization}
+\author{S-wind Research Team}
+\date{January 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exhaustive search of 278,784 configurations for mars habitat module design optimization. Complete 8-step derivation chain.
+\end{abstract}
+
+\section{Problem}
+\textbf{Objective}: Maximize habitable volume per launch mass
+
+\section{Derivation Chain}
+\begin{longtable}{|c|p{2cm}|p{2cm}|p{3cm}|p{2cm}|p{3cm}|}
+\hline
+Step & Desc & In & Out & Rule & Why\\\hline\endhead
+1 & Volume & $D, L$ & $V = π(D/2)²×L$ & Geometry & Cylinder volume\\\hline
+2 & Shell mass & $D, L, t, ρ$ & $M_shell = π×D×L×t×ρ$ & Geometry & Cylinder surface\\\hline
+3 & Insulation mass & $A, R$ & $M_ins = A × k/R × ρ_ins$ & Thermal & Conductivity relation\\\hline
+4 & Shielding mass & $A, ρ_s$ & $M_shield = A × ρ_s$ & Definition & Areal density\\\hline
+5 & Total mass & $M_*$ & $M = M_shell + M_ins + M_shield$ & Sum & All components\\\hline
+6 & Heat loss & $A, ΔT, R$ & $Q = A × ΔT / R$ & Fourier & Steady-state\\\hline
+7 & Radiation dose & $ρ_s, GCR$ & $dose = GCR × exp(-ρ_s/λ)$ & Exponential & Attenuation\\\hline
+8 & Objective & $V, M$ & $V/M$ & Efficiency & Volume per mass\\\hline
+\end{longtable}
+
+\section{Results}
+Optimal objective: 6.8000
+
+\end{document}
