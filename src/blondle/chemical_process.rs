@@ -14,15 +14,30 @@ use crate::knowledge::{
 
 /// Load all chemical process engineering knowledge
 pub fn load(kb: &mut KnowledgeBase) {
+    let before = (kb.physical_constants.len(), kb.physical_laws.len(), kb.theorems.len());
     add_constants(kb);
     add_laws(kb);
     add_theorems(kb);
     println!("[Blondle::ChemProcess] Loaded {} constants, {} laws, {} theorems",
-             CONSTANT_COUNT, LAW_COUNT, THEOREM_COUNT);
+             kb.physical_constants.len() - before.0,
+             kb.physical_laws.len() - before.1,
+             kb.theorems.len() - before.2);
 }
 
 pub fn count() -> (usize, usize, usize) {
-    (CONSTANT_COUNT, LAW_COUNT, THEOREM_COUNT)
+    // Measured, not declared: count what this module actually inserts
+    // into a standard (fundamentals-initialized) knowledge base.
+    let mut kb = KnowledgeBase::new();
+    kb.initialize_fundamentals();
+    let before = (kb.physical_constants.len(), kb.physical_laws.len(), kb.theorems.len());
+    add_constants(&mut kb);
+    add_laws(&mut kb);
+    add_theorems(&mut kb);
+    (
+        kb.physical_constants.len() - before.0,
+        kb.physical_laws.len() - before.1,
+        kb.theorems.len() - before.2,
+    )
 }
 
 const CONSTANT_COUNT: usize = 15;

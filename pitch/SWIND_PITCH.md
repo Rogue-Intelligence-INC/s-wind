@@ -10,7 +10,7 @@ Rogue Intelligence LNC — Proprietary & Confidential
 
 Give S-wind a sequence of numbers. It tells you — exactly, over ℚ, no floating point in the core engine:
 
-1. **Known?** It is matched against 130 built-in OEIS sequences (183 OEIS b-files loadable). Known results are labelled and **never counted as discoveries**.
+1. **Known?** It is matched against 129 built-in OEIS sequences (183 OEIS b-files loadable). Known results are labelled and **never counted as discoveries**.
 2. **Fittable?** A fixed-order algebraic search (recurrences → closed forms → identities → equation solving → rational functions → multiplicative structure), then knowledge-base pattern classes, produces a candidate closed form.
 3. **Survivable?** Candidates pass through fit-quality gates (degrees of freedom, extrapolation consistency, novelty) and are graded — never asserted. Survivors are queued for **human review**.
 
@@ -58,7 +58,7 @@ Across calls, Fate **remembers**: every processed signal joins a cross-domain po
 |---|---|
 | Exact rational arithmetic (EPR) | Fuzz-tested against a Python big-integer oracle: 2,675 cases, zero failures (one boundary bug at 2¹²⁷ disclosed in appendix; fix designed) |
 | Algebraic pattern fitting | Six-method algebraic search + pattern classes fit correctly across the probe suite (arithmetic / geometric / recurrence / polynomial / reciprocal / periodic) |
-| Known-sequence recognition | 130 built-in sequences recognized instantly, never counted as discoveries |
+| Known-sequence recognition | 129 built-in sequences recognized instantly, never counted as discoveries |
 | Continued exploration | Prime-gap signal: 16 rounds / 15 transforms before settling; exhausted signals are declared MYSTERY with the tested hypothesis space reported |
 | Candidate & review tracks | Fate candidate pool (auto-archived, promotable at confidence ≥ 0.8 with support ≥ 3); through the single entry point, surviving candidates now land in the KnowledgeBase `PendingReview` queue (`swind explore --save-pending`, verified end-to-end) — in-engine automatic wiring remains milestone M1 |
 | Deterministic & self-contained | 56/56 unit tests pass from a clean clone; fixed-seed evaluation is bit-reproducible |
@@ -168,3 +168,4 @@ S-wind is closed-source, licensed commercially:
 
 **S-wind: the conjecture refinery.**
 © 2026 Rogue Intelligence LNC. All Rights Reserved. Proprietary and confidential — do not redistribute.
+

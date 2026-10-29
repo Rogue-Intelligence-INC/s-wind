@@ -430,16 +430,6 @@ pub fn get_known_sequences() -> Vec<KnownSequence> {
         
         // === SPECIAL CONSTANTS ===
         KnownSequence {
-            id: "RIEMANN_ZEROS".into(),
-            name: "Riemann zeta zeros (imaginary parts)".into(),
-            first_terms: vec![],
-            pattern_class: None,
-            recurrence: None,
-            closed_form: None,
-            generating_function: None,
-            description: "Non-trivial zeros of Riemann zeta, all with Re(s)=1/2 (RH)".into(),
-        },
-        KnownSequence {
             id: "PI_DIGITS".into(),
             name: "Digits of pi".into(),
             first_terms: vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9],
@@ -653,8 +643,8 @@ pub fn get_known_sequences() -> Vec<KnownSequence> {
         // Stirling numbers of 2nd kind (rows)
         KnownSequence {
             id: "A008277".into(),
-            name: "Stirling numbers (2nd kind)".into(),
-            first_terms: vec![1, 0, 1, 0, 1, 1, 0, 1, 3, 1, 0, 1, 7, 6, 1],
+            name: "Triangle of Stirling numbers of the second kind (by rows)".into(),
+            first_terms: vec![1, 1, 1, 1, 3, 1, 1, 7, 6, 1, 1, 15, 25, 10, 1, 1],
             pattern_class: None,
             recurrence: Some("S(n,k) = k*S(n-1,k) + S(n-1,k-1)".into()),
             closed_form: None,

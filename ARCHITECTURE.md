@@ -45,7 +45,7 @@ Per call (`state.tick += 1`):
    later cross-domain comparison.
 2. **Known-sequence check** (`check_known_sequences`): exact prefix match,
    then subsequence-offset match, then closed-form match against
-   `kb.known_sequences` (130 built-ins; OEIS b-files can be merged via
+   `kb.known_sequences` (129 built-ins; OEIS b-files can be merged via
    `OeisLoader`). Hit ⇒ `KnownSequence`, **`is_discovery` is always false**,
    early return. (Known issue: no minimum-length guard — very short signals
    can match vacuously.)
@@ -133,7 +133,7 @@ interface runtime to emit answer / reverse-verification / derivation files.
 
 `initialize_fundamentals()` loads: 20 physical constants (CODATA 2022,
 stored as reference strings), 15 math constants, 81 theorems, 60 physical
-laws, pattern classes, and 130 known sequences. `data/oeis/` (183 b-files)
+laws, pattern classes, and 129 known sequences. `data/oeis/` (183 b-files)
 merges via `OeisLoader` on demand. Blondle packs add 588 entries across
 14 domains. Review track: `add_discovery` → `PendingReview` →
 `verify_discovery` → JSON persistence / Tex export for human review.
@@ -144,3 +144,4 @@ merges via `OeisLoader` on demand. Blondle packs add 588 entries across
   fuzz-verified against Python `Fraction` (2,675 cases). Known bug:
   `divmod` shortcut corrupts values in [2¹²⁷, 2¹²⁸) (pitch appendix A1).
 - `Rational` (i128): used by Space/Quad; `VoyagerRational` (i128) by Voyager.
+

@@ -476,7 +476,7 @@ pub fn get_builtin_oeis() -> Vec<OeisSequence> {
         OeisSequence {
             id: "A000169".into(),
             name: "Number of labeled rooted trees with n nodes".into(),
-            values: vec![1, 1, 3, 16, 125, 1296, 16807, 262144, 4782969],
+            values: vec![1, 2, 9, 64, 625, 7776, 117649, 2097152, 43046721],
             formula: Some("n^(n-1)".into()),
             comments: vec![],
         },
@@ -916,10 +916,10 @@ pub fn get_builtin_oeis() -> Vec<OeisSequence> {
         },
         OeisSequence {
             id: "A018252".into(),
-            name: "Composite numbers".into(),
-            values: vec![4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27],
+            name: "Nonprime numbers (1 together with composite numbers)".into(),
+            values: vec![1, 4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27],
             formula: None,
-            comments: vec!["Non-prime numbers > 1".into()],
+            comments: vec!["The nonprime numbers (OEIS A018252)".into()],
         },
         OeisSequence {
             id: "A020639".into(),
@@ -943,15 +943,15 @@ pub fn get_builtin_oeis() -> Vec<OeisSequence> {
             comments: vec![],
         },
         OeisSequence {
-            id: "A051959".into(),
+            id: "A005185".into(),
             name: "Hofstadter Q-sequence".into(),
             values: vec![1, 1, 2, 3, 3, 4, 5, 5, 6, 6, 6, 8, 8, 8, 10, 9, 10, 11, 11, 12],
             formula: Some("Q(n) = Q(n - Q(n-1)) + Q(n - Q(n-2))".into()),
             comments: vec![],
         },
         OeisSequence {
-            id: "A055512".into(),
-            name: "Lattice points in circle of radius n".into(),
+            id: "A000328".into(),
+            name: "Number of points of norm <= n^2 in square lattice".into(),
             values: vec![1, 5, 13, 29, 49, 81, 113, 149, 197, 253, 317, 377, 441],
             formula: None,
             comments: vec![],
