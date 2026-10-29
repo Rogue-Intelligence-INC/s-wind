@@ -21,6 +21,7 @@ fn main() -> std::io::Result<()> {
     println!("║   代数优先 - 符号表达式搜索引擎                                ║");
     println!("╚══════════════════════════════════════════════════════════════╝\n");
     
+    std::fs::create_dir_all("output").ok();
     let mut output = File::create("output/algebraic_unified_search.txt")?;
     
     writeln!(output, "S-wind Algebraic Unified Search Results")?;

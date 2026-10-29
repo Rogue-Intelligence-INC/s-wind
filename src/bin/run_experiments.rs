@@ -248,7 +248,7 @@ fn main() {
     }
 
     // Generate Markdown reports (with discovery summary)
-    generate_reports_with_discoveries(&results, &summary);
+    generate_reports_with_discoveries(&results, &summary, &kb);
 }
 
 fn run_fate_experiment(fate: &mut Fate, kb: &KnowledgeBase, name: &str, desc: &str, data: &[i128]) -> String {
@@ -355,7 +355,11 @@ fn run_fate_rational_experiment(fate: &mut Fate, kb: &KnowledgeBase, name: &str,
     format!("{}|{}|{}", name, status_str, format!("{:?}", elapsed))
 }
 
-fn generate_reports_with_discoveries(results: &[String], summary: &s_wind::DiscoverySummary) {
+fn generate_reports_with_discoveries(results: &[String], summary: &s_wind::DiscoverySummary, kb: &KnowledgeBase) {
+    let kb_stats = kb.stats();
+    let kb_line = format!("- **Knowledge Base**: {} theorems, {} physical laws, {} sequences (with OEIS)",
+        kb_stats.theorems, kb_stats.physical_laws, kb.known_sequences.len());
+    let seq_count = kb.known_sequences.len();
     // Build discovery summary section
     let discovery_section = if summary.total_discoveries > 0 || !summary.novel_discoveries.is_empty() {
         let novel_list = if summary.novel_discoveries.is_empty() {
@@ -414,7 +418,7 @@ Where d+1 = number of polynomial parameters. DoF=0 is pure interpolation (zero i
 ## System Configuration
 
 - **Arithmetic**: Extended Precision Rational (EPR) - Arbitrary precision
-- **Knowledge Base**: 78 theorems, 60 physical laws, 195+ sequences (with OEIS)
+{kb_line}
 - **Modules Loaded**: Fate, Voyager, Quad (Gravity, Quantum, Thermal, Coupling), Space
 - **Discovery Criterion**: Result ≠ Known Authority ∧ Verified Correct
 {}
@@ -438,7 +442,7 @@ S-wind successfully identifies:
 
 | Layer | Purpose | Check |
 |-------|---------|-------|
-| **Pre-OEIS** | Recognition | Match against 195+ sequences |
+| **Pre-OEIS** | Recognition | Match against {seq_count} sequences |
 | **Discovery** | Assessment | Definition + Verification + Non-triviality |
 | **Negative Knowledge** | Evidence | Why NOT known (failed patterns, no OEIS match) |
 
@@ -546,7 +550,7 @@ Where d+1 = number of polynomial parameters. DoF=0 is pure interpolation (zero i
 ## System Configuration
 
 - **Arithmetic**: Extended Precision Rational (EPR) - Arbitrary precision
-- **Knowledge Base**: 78 theorems, 60 physical laws, 195+ sequences (with OEIS)
+{kb_line}
 - **Modules Loaded**: Fate, Voyager, Quad (Gravity, Quantum, Thermal, Coupling), Space
 - **Discovery Criterion**: Result ≠ Known Authority ∧ Verified Correct
 {}
@@ -570,7 +574,7 @@ S-wind successfully identifies:
 
 | Layer | Purpose | Check |
 |-------|---------|-------|
-| **Pre-OEIS** | Recognition | Match against 195+ sequences |
+| **Pre-OEIS** | Recognition | Match against {seq_count} sequences |
 | **Discovery** | Assessment | Definition + Verification + Non-triviality |
 | **Negative Knowledge** | Evidence | Why NOT known (failed patterns, no OEIS match) |
 

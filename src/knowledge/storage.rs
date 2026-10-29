@@ -184,7 +184,8 @@ mod tests {
         let mut kb = KnowledgeBase::new();
         kb.initialize_fundamentals();
         
-        let test_path = "/tmp/test_kb.json";
+        let test_path_buf = std::env::temp_dir().join("swind_test_kb.json");
+        let test_path = test_path_buf.to_str().unwrap();
         
         // Save
         save_to_json(&kb, test_path).unwrap();

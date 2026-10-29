@@ -601,7 +601,8 @@ fn main() {
     let report = output.join("\n");
     println!("\n{}", report);
     
-    let mut file = File::create("/home/jouly/AI/Valhalla/s-wind-sim/output/irrational_unified_search.txt")
+    std::fs::create_dir_all("output").ok();
+    let mut file = File::create("output/irrational_unified_search.txt")
         .expect("Cannot create file");
     file.write_all(report.as_bytes()).expect("Cannot write");
     

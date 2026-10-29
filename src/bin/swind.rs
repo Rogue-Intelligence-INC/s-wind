@@ -131,18 +131,41 @@ fn run_optimize(project_id: &str) {
     };
     
     println!("  📊 Search space: {} combinations", format_number(search_space));
-    println!("  ⏳ Running exhaustive search...");
+    println!("  ⏳ Running sampled search (same convention as batch_optimizer)...");
     
-    // 模拟优化
-    let optimal_value = 0.85;
-    let valid_solutions = (search_space as f64 * 0.15) as u64;
+    // 与 batch_optimizer::optimize_project 相同的评估逻辑：
+    // 确定性 LCG 采样 sqrt(N) 个配置（上限 10,000），通用目标 = 参数均值，取最小。
+    let sample_size = ((search_space as f64).sqrt().min(10_000.0) as u64).max(1);
+    let mut seed: u64 = 12345;
+    let mut rand_simple = |seed: &mut u64, max: i32| -> i32 {
+        *seed = seed.wrapping_mul(1103515245).wrapping_add(12345);
+        ((*seed >> 16) as i32 % (max + 1)).abs()
+    };
+    let mut optimal_value = f64::MAX;
+    let mut valid_solutions: u64 = 0;
+    for _ in 0..sample_size {
+        // 6 个归一化参数（101 点网格，与 batch_optimizer 的步进网格一致）
+        let mut sum = 0.0;
+        for _ in 0..6 {
+            sum += rand_simple(&mut seed, 100) as f64 / 100.0;
+        }
+        let objective = sum / 6.0; // evaluate_generic: 参数均值
+        if objective > 0.0 {
+            valid_solutions += 1;
+            if objective < optimal_value {
+                optimal_value = objective;
+            }
+        }
+    }
+    if optimal_value == f64::MAX { optimal_value = 0.0; }
     
-    println!("  ✅ Optimization complete!");
+    println!("  ✅ Optimization complete! ({} samples evaluated)", format_number(sample_size));
     println!("\n📈 Results:");
     println!("  Optimal value: {:.4}", optimal_value);
-    println!("  Valid solutions: {} ({:.2}%)", 
+    println!("  Valid solutions: {} of {} sampled ({:.2}%)", 
         format_number(valid_solutions),
-        100.0 * valid_solutions as f64 / search_space as f64
+        format_number(sample_size),
+        100.0 * valid_solutions as f64 / sample_size as f64
     );
     
     // 保存结果
@@ -151,8 +174,8 @@ fn run_optimize(project_id: &str) {
     
     let result_path = output_dir.join(format!("{}_result.json", project_id));
     let result_json = format!(
-        r#"{{"project_id": "{}", "search_space": {}, "optimal_value": {:.4}, "valid_solutions": {}}}"#,
-        project_id, search_space, optimal_value, valid_solutions
+        r#"{{"project_id": "{}", "search_space": {}, "evaluated_samples": {}, "optimal_value": {:.4}, "valid_solutions": {}}}"#,
+        project_id, search_space, sample_size, optimal_value, valid_solutions
     );
     
     let mut file = File::create(&result_path).unwrap();

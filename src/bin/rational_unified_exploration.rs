@@ -775,7 +775,8 @@ fn main() {
     println!("\n{}", report_content);
     
     // 保存到文件
-    let mut file = File::create("/home/jouly/AI/Valhalla/s-wind-sim/output/rational_unified_exploration.txt")
+    std::fs::create_dir_all("output").ok();
+    let mut file = File::create("output/rational_unified_exploration.txt")
         .expect("Cannot create output file");
     file.write_all(report_content.as_bytes()).expect("Cannot write to file");
     

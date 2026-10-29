@@ -530,7 +530,8 @@ fn main() {
     println!("{}", report);
     
     // 保存到文件
-    let mut file = File::create("/home/jouly/AI/Valhalla/s-wind-sim/output/unified_theory_exhaustive.txt")
+    std::fs::create_dir_all("output").ok();
+    let mut file = File::create("output/unified_theory_exhaustive.txt")
         .expect("Cannot create output file");
     file.write_all(report.as_bytes()).expect("Cannot write to file");
     

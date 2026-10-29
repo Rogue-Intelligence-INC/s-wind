@@ -2695,7 +2695,7 @@ impl Fate {
             // Build negative knowledge
             let mut negative_evidence = Vec::new();
             if oeis_status == OeisStatus::NoMatch {
-                negative_evidence.push("Not in OEIS (195+ sequences searched)".to_string());
+                negative_evidence.push(format!("Not in OEIS ({} sequences searched)", kb.known_sequences.len()));
             }
             if fit_analysis.dof > 0 {
                 negative_evidence.push(format!("Non-trivial fit (DoF={} > 0)", fit_analysis.dof));
@@ -2716,7 +2716,7 @@ impl Fate {
             
             result.discovery_assessment = Some(DiscoveryAssessment {
                 // Layer 1: Pre-OEIS Check
-                oeis_sequences_searched: 195, // from kb.known_sequences.len()
+                oeis_sequences_searched: kb.known_sequences.len(),
                 oeis_status,
                 oeis_match_id: result.matched_known.clone(),
                 
