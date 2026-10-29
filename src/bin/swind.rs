@@ -17,6 +17,9 @@ use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
 
+use s_wind::knowledge::storage;
+use s_wind::{DiscoveryStatus, EPR, Fate, KnowledgeBase};
+
 mod shared {
     pub fn format_number(n: u64) -> String {
         let s = n.to_string();
@@ -49,6 +52,7 @@ fn main() {
     match args[1].as_str() {
         "help" | "--help" | "-h" => print_help(),
         "list" => list_projects(),
+        "explore" | "detect" => run_explore(&args[2..]),
         "optimize" => {
             let project_id = args.get(3).map(|s| s.as_str()).unwrap_or("A1");
             run_optimize(project_id);
@@ -70,6 +74,10 @@ fn print_help() {
     println!("📖 Usage:");
     println!("  swind <command> [options]\n");
     println!("📋 Commands:");
+    println!("  explore <seq> [options]  PRIMARY ENTRY: explore a sequence (e.g. \"10,17,24\" or \"1/2,1/3,1/4\")");
+    println!("      --mode fast|verified|loop|full   (default: loop)");
+    println!("      --kb <path>          Knowledge base JSON (loaded or created)");
+    println!("      --save-pending       Queue surviving candidates for human review in the KB");
     println!("  list                     List all available projects");
     println!("  optimize --project <ID>  Run optimization for a project");
     println!("  paper --project <ID> --format <md|tex|all>");
@@ -80,6 +88,139 @@ fn print_help() {
     println!("  cargo run --release --bin swind optimize --project A1");
     println!("  cargo run --release --bin swind paper --project A1 --format all");
     println!("  cargo run --release --bin swind batch");
+}
+
+/// THE single supported entry point for sequence exploration.
+/// All other commands are project-catalog utilities; the 87 research
+/// binaries under src/bin are archived experiments, not entry points.
+fn run_explore(args: &[String]) {
+    // Parse: first positional arg = sequence; options may follow.
+    let mut seq_str: Option<String> = None;
+    let mut mode = "loop".to_string();
+    let mut kb_path: Option<String> = None;
+    let mut save_pending = false;
+    let mut i = 0;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--mode" => { mode = args.get(i + 1).cloned().unwrap_or_else(|| "loop".into()); i += 2; }
+            "--kb" => { kb_path = args.get(i + 1).cloned(); i += 2; }
+            "--save-pending" => { save_pending = true; i += 1; }
+            other => { if seq_str.is_none() { seq_str = Some(other.to_string()); } i += 1; }
+        }
+    }
+    let seq_str = match seq_str {
+        Some(s) => s,
+        None => {
+            println!("Usage: swind explore \"10,17,24\" [--mode fast|verified|loop|full] [--kb path] [--save-pending]");
+            std::process::exit(2);
+        }
+    };
+
+    // Parse integers or a/b fractions into exact EPR values.
+    let mut signal: Vec<EPR> = Vec::new();
+    for tok in seq_str.split(',') {
+        let tok = tok.trim();
+        if tok.is_empty() { continue; }
+        let parsed = if let Some((n, d)) = tok.split_once('/') {
+            match (n.trim().parse::<i128>(), d.trim().parse::<i128>()) {
+                (Ok(n), Ok(d)) if d != 0 => Ok(EPR::from_ratio(n, d)),
+                _ => Err(tok.to_string()),
+            }
+        } else {
+            tok.parse::<i128>().map(EPR::from_i128).map_err(|_| tok.to_string())
+        };
+        match parsed {
+            Ok(v) => signal.push(v),
+            Err(t) => { println!("Cannot parse term: {}", t); std::process::exit(2); }
+        }
+    }
+    if signal.len() < 2 {
+        println!("Need at least 2 terms.");
+        std::process::exit(2);
+    }
+
+    // Knowledge base: from --kb JSON if given (created if missing), else built-ins.
+    let kb_file = kb_path.clone().unwrap_or_else(|| "swind_kb.json".to_string());
+    let mut kb = match &kb_path {
+        Some(p) if Path::new(p).exists() => storage::load_from_json(p).unwrap_or_else(|_| {
+            let mut k = KnowledgeBase::new();
+            k.initialize_fundamentals();
+            k
+        }),
+        _ => {
+            let mut k = KnowledgeBase::new();
+            k.initialize_fundamentals();
+            k
+        }
+    };
+
+    let mut fate = Fate::new();
+    let result = match mode.as_str() {
+        "fast" => {
+            let r = fate.explore(&signal, &kb);
+            println!("Mode: fast (explore) — NOTE: fast-path labels are ungated; use verified/loop for graded candidates.");
+            r
+        }
+        "verified" => fate.explore_with_verification(&signal, &kb),
+        "full" => {
+            let full = fate.full_exploration(&signal, &kb);
+            println!("Final status: {:?}", full.final_status);
+            println!("Voyager equation: {:?} (verified: {})", full.voyager_equation, full.voyager_verified);
+            full.full_result
+        }
+        _ => { // loop (default): continued exploration until settled or MYSTERY
+            let (r, _history, stats) = fate.explore_with_self_loop(&signal, &kb);
+            println!("Self-loop: {}", stats.summary());
+            if stats.truly_exhausted {
+                println!("Result: MYSTERY — all transforms exhausted, no pattern survived.");
+            }
+            r
+        }
+    };
+
+    println!("\nStatus: {:?}", result.status);
+    if let Some(f) = &result.formula {
+        println!("Formula: {}", f);
+    }
+    println!("Fit level: {:?}", result.fit_level);
+    println!("Is discovery (engine label): {}", result.is_discovery);
+
+    if let Some(a) = &result.discovery_assessment {
+        println!("\n--- Discovery assessment (candidate for human review, not a conclusion) ---");
+        println!("Grade: {:?}", a.discovery_status);
+        println!("OEIS sequences searched: {}", a.oeis_sequences_searched);
+        println!("Verification: {}", a.verification_desc);
+        println!("Non-triviality: {}", a.non_trivial_desc);
+        println!("Conclusion: {}", a.conclusion);
+        for e in &a.negative_evidence {
+            println!("  negative evidence: {}", e);
+        }
+
+        if save_pending {
+            let eligible = result.is_discovery || matches!(
+                a.discovery_status,
+                DiscoveryStatus::CandidateLaw | DiscoveryStatus::StrongCandidate | DiscoveryStatus::GenuineDiscovery
+            );
+            if eligible {
+                if let Some(f) = &result.formula {
+                    let derivation: String = result.derivation_steps.join("\n").chars().take(4000).collect();
+                    let id = kb.add_discovery(
+                        f.clone(),
+                        format!("swind explore candidate: {:?}", a.discovery_status),
+                        derivation,
+                    );
+                    match storage::save_to_json(&kb, &kb_file) {
+                        Ok(()) => println!("\n📥 Queued for human review: {} (pending total: {}) -> {}", id, kb.get_pending_review().len(), kb_file),
+                        Err(e) => println!("\nFailed to save KB: {}", e),
+                    }
+                }
+            } else {
+                println!("\nNot queued: candidate did not survive grading (grade: {:?}).", a.discovery_status);
+            }
+        }
+    } else if save_pending {
+        println!("\nNot queued: no graded assessment in this mode (use --mode verified or loop).");
+    }
 }
 
 fn list_projects() {

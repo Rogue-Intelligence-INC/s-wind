@@ -4,16 +4,31 @@
 > in execution order. Claims in `pitch/SWIND_PITCH.md` refer to the
 > **verified path** (§2) unless stated otherwise.
 
-## 0. Entry surfaces — three distinct runtimes
+## 0. Topology — one product, one entry point
 
-S-Wind is a Rust library (`s_wind`). There is no daemon and no single CLI
-pipeline; there are three independent entry surfaces:
+S-Wind is a standalone product (this repo). It is **not** part of the
+Valhalla workspace (separated 2026-10-30); the only shared component,
+Voyager, is vendored under `vendor/voyager`.
 
-| Surface | Entry | Purpose |
-|---|---|---|
-| Fate engine | `Fate::explore*`, `KnowledgeBase` | Sequence → candidate formula, gated assessment |
-| Voyager reports | `interface::ExperimentRunner`, `quick_experiment` | Signal → equation + step-by-step derivation trace → `.tex`/`.md` files |
-| Knowledge review | `KnowledgeBase::add_discovery` → `verify_discovery` | Human pending-review queue with JSON/Tex persistence |
+**The single supported user entry point is the `swind` CLI:**
+
+```bash
+swind explore "10,17,24"                       # continued exploration (default)
+swind explore "12,21,34,51,72,97,126,159" --mode verified --save-pending
+swind explore "1/2,1/3,1/4" --mode full
+```
+
+`explore` accepts integers or `a/b` fractions, runs the Fate engine
+(§1–§3, selected by `--mode`), prints the graded assessment, and with
+`--save-pending` writes surviving candidates into the KnowledgeBase
+pending-review queue (§5) — the propose → review loop through one command.
+Other CLI verbs (`list`, `optimize`, `paper`, `batch`) are project-catalog
+utilities. The 87 binaries under `src/bin/` are archived research scripts,
+not entry points (a usage census found only 12 of them call the engine at
+all). The library API (`Fate`, `KnowledgeBase`, `ExperimentRunner`) remains
+available for embedding, and the Voyager report runtime
+(`interface::ExperimentRunner`) still powers derivation-trace documents,
+but neither is a separate product entry.
 
 Supporting modules: `quad` (four Rational physics signal generators used by
 experiment binaries as signal sources/demos — not inside Fate's loop),
