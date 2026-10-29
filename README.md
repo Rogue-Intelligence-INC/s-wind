@@ -2,7 +2,7 @@
 
 [![Status](https://img.shields.io/badge/Status-Alpha-red.svg)]()
 [![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg)](https://www.rust-lang.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE.md)
 
 > ⚠️ **ALPHA TEST** - This software is under active development. APIs may change without notice.
 
@@ -24,7 +24,7 @@
 ### Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/s-wind.git
+git clone https://github.com/Rogue-Intelligence-INC/s-wind.git
 cd s-wind
 cargo build --release
 ```
@@ -214,7 +214,7 @@ fate_exhaustive: sha256:7a3b2c1d...
   year = {2026},
   note = {Alpha release},
   organization = {Rogue Intelligence LNC.},
-  url = {https://github.com/joulymars/s-wind}
+  url = {https://github.com/Rogue-Intelligence-INC/s-wind}
 }
 ```
 
@@ -222,7 +222,11 @@ fate_exhaustive: sha256:7a3b2c1d...
 
 ## License
 
-MIT License
+**Proprietary — Copyright © 2026 Rogue Intelligence LNC. All Rights Reserved.**
+
+This software is **not open source**. Access, evaluation, and use are governed by [LICENSE.md](LICENSE.md).
+No redistribution, sublicensing, or competing use is permitted without prior written permission.
+For commercial licensing inquiries: licensing@rogue-intelligence.com
 
 ---
 

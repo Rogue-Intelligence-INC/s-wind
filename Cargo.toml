@@ -3,6 +3,7 @@ name = "s-wind-sim"
 version = "0.1.0"
 edition = "2021"
 description = "S-wind: Complete Exact Algebraic Simulation - EPR (Infinite Precision)"
+license-file = "LICENSE.md"
 
 [lib]
 name = "s_wind"
@@ -15,7 +16,7 @@ chrono = "0.4"
 rayon = "1.10"
 
 # Voyager for pattern detection
-voyager = { path = "../utils/voyager" }
+voyager = { path = "vendor/voyager" }
 
 # Examples
 [[example]]
