@@ -1,0 +1,100 @@
+audit_base_commit=a36cbcbfe5ea4f6fa34ac4e2d5e50ba586cbb2d2
+git_diff_stat_main_src_Cargo_toml=(empty)
+recorded_utc=2026-11-20T19:50:15Z
+beijing=2026-11-21 03:50 UTC+8
+product_binary=/workspace/target/release/swind
+product_binary_was_not_rebuilt=true
+optimize_cwd=/tmp
+optimize_json=/tmp/swind_output/A1_result.json
+
+--- cargo test --lib -- test_fate_linear_epr test_fate_fibonacci_epr test_basel_s20 test_quad_system_integration -- --test-threads=8
+running 4 tests
+test tests::test_basel_s20 ... ok
+test tests::test_quad_system_integration ... ok
+test fate::tests::test_fate_fibonacci_epr ... ok
+test fate::tests::test_fate_linear_epr ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 52 filtered out; finished in 0.00s
+
+--- cargo test --lib fate::tests::test_fate_linear_epr -- --exact --nocapture
+running 1 test
+Status: PatternDetected { class_id: "algebraic", formula: "f(n) = 1/2·n [arithmetic]" }
+Formula: Some("f(n) = 1/2·n [arithmetic]")
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 55 filtered out; finished in 0.00s
+
+--- experimental/usage_audit/caller  cargo run --release
+LIB explore status=PatternDetected { class_id: "algebraic", formula: "f(n) = 1/2·n [arithmetic]" } formula=Some("f(n) = 1/2·n [arithmetic]")
+LIB verified fit=Some(DescriptiveModel) discovery=false formula=Some("f(n) = 1/2·n [arithmetic]")
+LIB loop formula=Some("f(n) = 1/2·n [arithmetic]") closure_reached=false truly_exhausted=false iterations=1
+LIB gravity unit_test_r r=2 F=5/2
+LIB gravity variant_r r=4 F=5/8
+LIB search_linear one_plus_two_pi hits=1
+  #0 expr=·1 + 2·π error_percent=0.000000000000 value=7.2831853071795862
+LIB search_linear five_plus_sqrt2 hits=1
+  #0 expr=5·1 + ·√2 error_percent=0.000000000000 value=6.4142135623730949
+
+--- python3 experimental/usage_audit/independent_check.py
+one_plus_two_pi examined=42 hits=1
+  a=1 b=2 value=7.2831853071795862 error_percent=0.000000000000
+five_plus_sqrt2 examined=110 hits=1
+  a=5 b=1 value=6.4142135623730949 error_percent=0.000000000000
+six_zeros_mean=0
+
+--- /workspace/target/release/swind explore "1/2,1,3/2" --mode loop
+Self-loop: Iterations: 1, Signal: 3→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED
+Status: PatternDetected { class_id: "algebraic", formula: "f(n) = 1/2·n [arithmetic]" }
+Formula: f(n) = 1/2·n [arithmetic]
+Fit level: Some(DescriptiveModel)
+Is discovery (engine label): false
+Grade: DescriptiveOnly
+OEIS sequences searched: 129
+Verification: OOS 0/1 points
+Non-triviality: DoF=2 (n=3, params=1)
+
+--- swind explore "1,1,2,3,5" --mode full
+Final status: Known { source: "OEIS: A000045 (Fibonacci numbers), Fate: (phi^n - psi^n) / sqrt(5)" }
+Voyager equation: Some("f: unknown (5 values)") (verified: true)
+Status: KnownSequence { id: "A000045_alt", name: "Fibonacci numbers (starts 1,1)" }
+Formula: (phi^n - psi^n) / sqrt(5)
+Fit level: None
+Is discovery (engine label): false
+
+--- swind explore "22,42,122"
+Self-loop: Iterations: 1, Signal: 3→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED
+Formula: s[n+1] = 4·s[n] + -46 [linear recurrence, s[1]=22]
+Fit level: Some(DescriptiveModel)
+Grade: DescriptiveOnly
+Verification: OOS 0/1 points
+Non-triviality: DoF=1 (n=3, params=2)
+Is discovery (engine label): false
+
+--- swind explore "3,6,9,12" --mode verified
+Formula: f(n) = 3·n [arithmetic]
+Fit level: Some(DescriptiveModel)
+Grade: DescriptiveOnly
+Verification: OOS 0/1 points
+Non-triviality: DoF=3 (n=4, params=1)
+Is discovery (engine label): false
+
+--- swind explore "2,3,5,7,11,13" --mode loop
+Self-loop: Iterations: 1, Signal: 6→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED
+Status: KnownSequence { id: "A000040", name: "Prime numbers" }
+Is discovery (engine label): false
+
+--- swind explore "8,3,15,6,20,1" --mode loop
+Self-loop: Iterations: 4, Signal: 6→4, Extensions: 0, Transforms: 3, Patterns tried: 3, Fate: CONVERGED
+Formula: s[n+2] = 3512/5327·s[n+1] + 63590/143829·s[n] [2nd-order recurrence]
+Fit level: Some(DescriptiveModel)
+Grade: DescriptiveOnly
+Verification: OOS 0/1 points
+Non-triviality: DoF=2 (n=4, params=2)
+Is discovery (engine label): false
+
+--- swind optimize --project A1
+Search space: 673,920 combinations
+820 samples evaluated
+Optimal value: 0.1483
+Valid solutions: 820 of 820 sampled (100.00%)
+JSON: {"project_id": "A1", "search_space": 673920, "evaluated_samples": 820, "optimal_value": 0.1483, "valid_solutions": 820}
+
+not_run=src/search.rs test_search_alpha_inv
+not_run=src/bin/batch_optimizer.rs
