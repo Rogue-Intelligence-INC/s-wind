@@ -1,0 +1,176 @@
+======================================================================
+S-wind候选池实验 - 多候选生成与筛选
+======================================================================
+
+知识库路径: /workspace/experimental/land_doig_2027/land_doig_kb.json
+
+阶段1: 多次调用S-wind，累积候选
+------------------------------------------------------------
+
+============================================================
+S-wind调用 (模式: verified)
+描述: 策略A - 按索引顺序删除
+序列: [52, 45, 38]
+============================================================
+命令: /workspace/target/release/swind explore 52,45,38 --mode verified --kb /workspace/experimental/land_doig_2027/land_doig_kb.json --save-pending
+
+返回码: 0
+输出:
+╔══════════════════════════════════════════════════════════════╗
+║     S-wind v1.0 - Exact Algebraic Simulation System          ║
+║     穷尽搜索 · 自动论文 · 3D模型                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+Status: PatternDetected { class_id: "algebraic", formula: "f(n) = -7·n + 59 [arithmetic]" }
+Formula: f(n) = -7·n + 59 [arithmetic]
+Fit level: Some(DescriptiveModel)
+Is discovery (engine label): false
+
+--- Discovery assessment (candidate for human review, not a conclusion) ---
+Grade: DescriptiveOnly
+OEIS sequences searched: 129
+Verification: OOS 0/1 points
+Non-triviality: DoF=2 (n=3, params=1)
+Conclusion: Descriptive model only - not yet verified
+  negative evidence: Not in OEIS (129 sequences searched)
+  negative evidence: Non-trivial fit (DoF=2 > 0)
+
+Not queued: candidate did not survive grading (grade: DescriptiveOnly).
+
+
+============================================================
+S-wind调用 (模式: verified)
+描述: 策略B - 随机删除
+序列: [50, 47, 40]
+============================================================
+命令: /workspace/target/release/swind explore 50,47,40 --mode verified --kb /workspace/experimental/land_doig_2027/land_doig_kb.json --save-pending
+
+返回码: 0
+输出:
+╔══════════════════════════════════════════════════════════════╗
+║     S-wind v1.0 - Exact Algebraic Simulation System          ║
+║     穷尽搜索 · 自动论文 · 3D模型                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+Status: PatternDetected { class_id: "algebraic", formula: "s[n+1] = 7/3·s[n] + -209/3 [linear recurrence, s[1]=50]" }
+Formula: s[n+1] = 7/3·s[n] + -209/3 [linear recurrence, s[1]=50]
+Fit level: Some(DescriptiveModel)
+Is discovery (engine label): false
+
+--- Discovery assessment (candidate for human review, not a conclusion) ---
+Grade: DescriptiveOnly
+OEIS sequences searched: 129
+Verification: OOS 0/1 points
+Non-triviality: DoF=1 (n=3, params=2)
+Conclusion: Descriptive model only - not yet verified
+  negative evidence: Not in OEIS (129 sequences searched)
+  negative evidence: Non-trivial fit (DoF=1 > 0)
+
+Not queued: candidate did not survive grading (grade: DescriptiveOnly).
+
+
+============================================================
+S-wind调用 (模式: verified)
+描述: 策略C - 按松紧度删除
+序列: [48, 43, 35]
+============================================================
+命令: /workspace/target/release/swind explore 48,43,35 --mode verified --kb /workspace/experimental/land_doig_2027/land_doig_kb.json --save-pending
+
+返回码: 0
+输出:
+╔══════════════════════════════════════════════════════════════╗
+║     S-wind v1.0 - Exact Algebraic Simulation System          ║
+║     穷尽搜索 · 自动论文 · 3D模型                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+Status: PatternDetected { class_id: "algebraic", formula: "s[n+1] = 8/5·s[n] + -169/5 [linear recurrence, s[1]=48]" }
+Formula: s[n+1] = 8/5·s[n] + -169/5 [linear recurrence, s[1]=48]
+Fit level: Some(DescriptiveModel)
+Is discovery (engine label): false
+
+--- Discovery assessment (candidate for human review, not a conclusion) ---
+Grade: DescriptiveOnly
+OEIS sequences searched: 129
+Verification: OOS 0/1 points
+Non-triviality: DoF=1 (n=3, params=2)
+Conclusion: Descriptive model only - not yet verified
+  negative evidence: Not in OEIS (129 sequences searched)
+  negative evidence: Non-trivial fit (DoF=1 > 0)
+
+Not queued: candidate did not survive grading (grade: DescriptiveOnly).
+
+
+============================================================
+S-wind调用 (模式: verified)
+描述: 策略D - 组合启发式
+序列: [46, 40, 33]
+============================================================
+命令: /workspace/target/release/swind explore 46,40,33 --mode verified --kb /workspace/experimental/land_doig_2027/land_doig_kb.json --save-pending
+
+返回码: 0
+输出:
+╔══════════════════════════════════════════════════════════════╗
+║     S-wind v1.0 - Exact Algebraic Simulation System          ║
+║     穷尽搜索 · 自动论文 · 3D模型                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+Status: PatternDetected { class_id: "algebraic", formula: "s[n+1] = 7/6·s[n] + -41/3 [linear recurrence, s[1]=46]" }
+Formula: s[n+1] = 7/6·s[n] + -41/3 [linear recurrence, s[1]=46]
+Fit level: Some(DescriptiveModel)
+Is discovery (engine label): false
+
+--- Discovery assessment (candidate for human review, not a conclusion) ---
+Grade: DescriptiveOnly
+OEIS sequences searched: 129
+Verification: OOS 0/1 points
+Non-triviality: DoF=1 (n=3, params=2)
+Conclusion: Descriptive model only - not yet verified
+  negative evidence: Not in OEIS (129 sequences searched)
+  negative evidence: Non-trivial fit (DoF=1 > 0)
+
+Not queued: candidate did not survive grading (grade: DescriptiveOnly).
+
+
+============================================================
+S-wind调用 (模式: verified)
+描述: 策略E - 自适应权重
+序列: [45, 39, 32]
+============================================================
+命令: /workspace/target/release/swind explore 45,39,32 --mode verified --kb /workspace/experimental/land_doig_2027/land_doig_kb.json --save-pending
+
+返回码: 0
+输出:
+╔══════════════════════════════════════════════════════════════╗
+║     S-wind v1.0 - Exact Algebraic Simulation System          ║
+║     穷尽搜索 · 自动论文 · 3D模型                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+Status: PatternDetected { class_id: "algebraic", formula: "s[n+1] = 7/6·s[n] + -27/2 [linear recurrence, s[1]=45]" }
+Formula: s[n+1] = 7/6·s[n] + -27/2 [linear recurrence, s[1]=45]
+Fit level: Some(DescriptiveModel)
+Is discovery (engine label): false
+
+--- Discovery assessment (candidate for human review, not a conclusion) ---
+Grade: DescriptiveOnly
+OEIS sequences searched: 129
+Verification: OOS 0/1 points
+Non-triviality: DoF=1 (n=3, params=2)
+Conclusion: Descriptive model only - not yet verified
+  negative evidence: Not in OEIS (129 sequences searched)
+  negative evidence: Non-trivial fit (DoF=1 > 0)
+
+Not queued: candidate did not survive grading (grade: DescriptiveOnly).
+
+
+阶段2: 分析知识库中的候选池
+------------------------------------------------------------
+错误: KB file not found
+
+======================================================================
+实验完成
+======================================================================
