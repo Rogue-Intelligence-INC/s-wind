@@ -1,0 +1,120 @@
+{
+  "engine": "none",
+  "adapter": "experimental/three_projects/covering_array",
+  "reproduce_CA_2_3_2": {
+    "published_N": 4,
+    "published_source": "ca-tools ca_table.csv t=2 v=2 k=3, Kleitman-Spencer/Katona and NIST/KSK rows, commit 830809df",
+    "math_lower_bound": 4,
+    "math_lower_bound_reason": "N >= v^t = 4 and Sch\u00f6nheim N >= v^2 = 4",
+    "exhaustive_N3": {
+      "rows": 3,
+      "columns": 3,
+      "symbols": 2,
+      "strength": 2,
+      "domain": "ordered columns, repeats allowed but rejected by the pair test",
+      "nodes": 0,
+      "covering_arrays_found": 0,
+      "seconds": 1.6087999938463327e-05,
+      "complete": true
+    },
+    "exhaustive_N4": {
+      "rows": 4,
+      "columns": 3,
+      "symbols": 2,
+      "strength": 2,
+      "domain": "ordered columns, repeats allowed but rejected by the pair test",
+      "nodes": 384,
+      "covering_arrays_found": 48,
+      "seconds": 0.00017133600022134488,
+      "complete": true
+    },
+    "lex_or_scan_example_verified": {
+      "ok": true,
+      "rows": 4,
+      "columns": 3,
+      "strength": 2,
+      "symbols": 2,
+      "blocks": 3,
+      "tuples_per_block": 4,
+      "missing_blocks": 0,
+      "missing_examples": []
+    },
+    "published_file_verified": {
+      "ok": true,
+      "rows": 4,
+      "columns": 3,
+      "strength": 2,
+      "symbols": 2,
+      "blocks": 3,
+      "tuples_per_block": 4,
+      "missing_blocks": 0,
+      "missing_examples": []
+    },
+    "status": "\u590d\u73b0",
+    "improved_record": false,
+    "optimality": "N>=4 by the tuple lower bound. The N=4 scan found covering arrays, so 4 is optimal. The N=3 scan is extra finite-domain evidence, not required once the bound is 4."
+  },
+  "reproduce_CA_2_4_2": {
+    "published_N": 5,
+    "published_source": "ca-tools ca_table.csv t=2 v=2 k=4 N=5, Kleitman-Spencer/Katona and CAs::KSK",
+    "math_lower_bound": 4,
+    "math_lower_bound_does_not_rule_out": "N=4 is still above v^t=4, so the bound alone does not prove the table",
+    "exhaustive_N4": {
+      "rows": 4,
+      "columns": 4,
+      "symbols": 2,
+      "strength": 2,
+      "domain": "unordered distinct columns",
+      "nodes": 37,
+      "covering_arrays_found": 0,
+      "seconds": 6.194899970068946e-05,
+      "complete": true
+    },
+    "exhaustive_N5_summary": {
+      "covering_arrays_found": 80,
+      "nodes": 2142,
+      "seconds": 0.0009003139998640108,
+      "complete": true,
+      "verified": true
+    },
+    "status": "\u590d\u73b0",
+    "improved_record": false,
+    "optimality": "Finite exhaustive search: zero CA(4;2,4,2) in the column domain, and at least one CA(5;2,4,2). This is an exhaustive finite-domain proof for this parameter, not a new record."
+  },
+  "attempt_CA_2_5_3": {
+    "published_N": 11,
+    "published_file": "/tmp/ca-tools/table/arrays/CA_11_2_5_3_c33e3aff.txt",
+    "published_verified_by_our_checker": {
+      "ok": true,
+      "rows": 11,
+      "columns": 5,
+      "strength": 2,
+      "symbols": 3,
+      "blocks": 10,
+      "tuples_per_block": 9,
+      "missing_blocks": 0,
+      "missing_examples": []
+    },
+    "math_lower_bound": 9,
+    "gap": "11 - 9 = 2. N=10 is not ruled out by Sch\u00f6nheim or by v^t.",
+    "search": "Delete one row of the published 11-row array, then hill-climb single-cell changes. Seed fixed. Budget is wall time.",
+    "repair": {
+      "improved": false,
+      "rows": 10,
+      "columns": 5,
+      "symbols": 3,
+      "strength": 2,
+      "score": 86,
+      "goal": 90,
+      "trials": 11,
+      "mutations": 16557492,
+      "seconds": 600.0000125739998,
+      "seed": 20261121,
+      "complete": false,
+      "best_incomplete_kept": true
+    },
+    "status": "\u672a\u6539\u8fdb",
+    "improved_record": false,
+    "optimality": "\u672a\u8bc1\u660e\u3002\u641c\u7d22\u4e0d\u5b8c\u5907\uff0c\u5931\u8d25\u4e0d\u80fd\u5f53\u6210 N=10 \u4e0d\u5b58\u5728\u3002"
+  }
+}

@@ -1,0 +1,18 @@
+╔══════════════════════════════════════════════════════════════╗
+║     S-wind v1.0 - Exact Algebraic Simulation System          ║
+║     穷尽搜索 · 自动论文 · 3D模型                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+Status: PatternDetected { class_id: "polynomial", formula: "f(n) = 1 + 2·(n-1) + 1·C(n-1,2) + 1·C(n-1,3) + -2·C(n-1,4) + 4·C(n-1,5) + -8·C(n-1,6) + 15·C(n-1,7) + -26·C(n-1,8) [Newton form, degree 8]" }
+Formula: f(n) = 1 + 2·(n-1) + 1·C(n-1,2) + 1·C(n-1,3) + -2·C(n-1,4) + 4·C(n-1,5) + -8·C(n-1,6) + 15·C(n-1,7) + -26·C(n-1,8) [Newton form, degree 8]
+Fit level: Some(InterpolantFit)
+Is discovery (engine label): false
+
+--- Discovery assessment (candidate for human review, not a conclusion) ---
+Grade: TrivialInterpolation
+OEIS sequences searched: 129
+Verification: OOS 0/1 points
+Non-triviality: DoF=0 (n=9, params=9)
+Conclusion: Trivial interpolation (DoF=0) - not a discovery
+  negative evidence: Not in OEIS (129 sequences searched)
