@@ -1,0 +1,18 @@
+# Land-Doig 2027 Experiment Dependencies
+# All dependencies are open-source and freely available
+
+# MIP solving (open-source)
+PuLP>=2.7.0
+highspy>=1.5.0
+
+# MPS file parsing
+# PuLP has built-in MPS reading
+
+# Standard scientific computing
+numpy>=1.24.0
+
+# JSON handling (stdlib)
+# json (built-in)
+
+# Testing and validation
+pytest>=7.4.0

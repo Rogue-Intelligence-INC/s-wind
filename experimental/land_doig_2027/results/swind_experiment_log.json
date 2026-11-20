@@ -1,0 +1,56 @@
+{
+  "experiment": "swind_strategy_sequence_analysis",
+  "input_sequences": {
+    "strategy_a": [
+      52,
+      45,
+      38
+    ],
+    "strategy_b": [
+      50,
+      47,
+      40
+    ],
+    "strategy_c": [
+      48,
+      43,
+      35
+    ],
+    "improvement": [
+      2,
+      2
+    ]
+  },
+  "swind_results": {
+    "strategy_a": {
+      "returncode": 0,
+      "stdout": "╔══════════════════════════════════════════════════════════════╗\n║     S-wind v1.0 - Exact Algebraic Simulation System          ║\n║     穷尽搜索 · 自动论文 · 3D模型                              ║\n╚══════════════════════════════════════════════════════════════╝\n\nSelf-loop: Iterations: 1, Signal: 3→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED\n\nStatus: PatternDetected { class_id: \"algebraic\", formula: \"f(n) = -7·n + 59 [arithmetic]\" }\nFormula: f(n) = -7·n + 59 [arithmetic]\nFit level: Some(DescriptiveModel)\nIs discovery (engine label): false\n\n--- Discovery assessment (candidate for human review, not a conclusion) ---\nGrade: DescriptiveOnly\nOEIS sequences searched: 129\nVerification: OOS 0/1 points\nNon-triviality: DoF=2 (n=3, params=1)\nConclusion: Descriptive model only - not yet verified\n  negative evidence: Not in OEIS (129 sequences searched)\n  negative evidence: Non-trivial fit (DoF=2 > 0)\n",
+      "stderr": "",
+      "discovered_pattern": "Formula: f(n) = -7·n + 59 [arithmetic]"
+    },
+    "strategy_b": {
+      "returncode": 0,
+      "stdout": "╔══════════════════════════════════════════════════════════════╗\n║     S-wind v1.0 - Exact Algebraic Simulation System          ║\n║     穷尽搜索 · 自动论文 · 3D模型                              ║\n╚══════════════════════════════════════════════════════════════╝\n\nSelf-loop: Iterations: 1, Signal: 3→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED\n\nStatus: PatternDetected { class_id: \"algebraic\", formula: \"s[n+1] = 7/3·s[n] + -209/3 [linear recurrence, s[1]=50]\" }\nFormula: s[n+1] = 7/3·s[n] + -209/3 [linear recurrence, s[1]=50]\nFit level: Some(DescriptiveModel)\nIs discovery (engine label): false\n\n--- Discovery assessment (candidate for human review, not a conclusion) ---\nGrade: DescriptiveOnly\nOEIS sequences searched: 129\nVerification: OOS 0/1 points\nNon-triviality: DoF=1 (n=3, params=2)\nConclusion: Descriptive model only - not yet verified\n  negative evidence: Not in OEIS (129 sequences searched)\n  negative evidence: Non-trivial fit (DoF=1 > 0)\n",
+      "stderr": "",
+      "discovered_pattern": "Formula: s[n+1] = 7/3·s[n] + -209/3 [linear recurrence, s[1]=50]"
+    },
+    "strategy_c": {
+      "returncode": 0,
+      "stdout": "╔══════════════════════════════════════════════════════════════╗\n║     S-wind v1.0 - Exact Algebraic Simulation System          ║\n║     穷尽搜索 · 自动论文 · 3D模型                              ║\n╚══════════════════════════════════════════════════════════════╝\n\nSelf-loop: Iterations: 1, Signal: 3→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED\n\nStatus: PatternDetected { class_id: \"algebraic\", formula: \"s[n+1] = 8/5·s[n] + -169/5 [linear recurrence, s[1]=48]\" }\nFormula: s[n+1] = 8/5·s[n] + -169/5 [linear recurrence, s[1]=48]\nFit level: Some(DescriptiveModel)\nIs discovery (engine label): false\n\n--- Discovery assessment (candidate for human review, not a conclusion) ---\nGrade: DescriptiveOnly\nOEIS sequences searched: 129\nVerification: OOS 0/1 points\nNon-triviality: DoF=1 (n=3, params=2)\nConclusion: Descriptive model only - not yet verified\n  negative evidence: Not in OEIS (129 sequences searched)\n  negative evidence: Non-trivial fit (DoF=1 > 0)\n",
+      "stderr": "",
+      "discovered_pattern": "Formula: s[n+1] = 8/5·s[n] + -169/5 [linear recurrence, s[1]=48]"
+    },
+    "improvement": {
+      "returncode": 0,
+      "stdout": "╔══════════════════════════════════════════════════════════════╗\n║     S-wind v1.0 - Exact Algebraic Simulation System          ║\n║     穷尽搜索 · 自动论文 · 3D模型                              ║\n╚══════════════════════════════════════════════════════════════╝\n\nSelf-loop: Iterations: 1, Signal: 2→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED\n\nStatus: KnownSequence { id: \"A000931\", name: \"Padovan sequence\" }\nFit level: None\nIs discovery (engine label): false\n",
+      "stderr": "",
+      "discovered_pattern": "Self-loop: Iterations: 1, Signal: 2→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED"
+    }
+  },
+  "conclusions": [
+    "strategy_a: S-wind发现模式 - Formula: f(n) = -7·n + 59 [arithmetic]",
+    "strategy_b: S-wind发现模式 - Formula: s[n+1] = 7/3·s[n] + -209/3 [linear recurrence, s[1]=50]",
+    "strategy_c: S-wind发现模式 - Formula: s[n+1] = 8/5·s[n] + -169/5 [linear recurrence, s[1]=48]",
+    "improvement: S-wind发现模式 - Self-loop: Iterations: 1, Signal: 2→0, Extensions: 0, Transforms: 0, Patterns tried: 0, Fate: CONVERGED"
+  ]
+}
