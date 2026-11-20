@@ -2,7 +2,7 @@
 
 审计前 HEAD：`a36cbcbfe5ea4f6fa34ac4e2d5e50ba586cbb2d2`。分支 `cursor/land-doig-experiment-17b2`。`git diff --stat main -- src Cargo.toml` 无输出，产品 `src/` 与 `main` 一致。本次只新增 `experimental/usage_audit/`。没有改 `src/`、产品二进制、阈值，也没有覆盖 Land–Doig 与三项实验的原始日志。
 
-运行时刻：2026-11-21 03:50（北京时间，UTC+8）。机器 UTC 记录为 `2026-11-20T19:50:15Z`。原始输出见 `logs/run.log`。
+运行时刻：2026-11-21 03:50（北京时间，UTC+8）。机器 UTC 记录为 `2026-11-20T19:50:15Z`。原始输出见 `logs/run.txt`。根目录 `.gitignore` 忽略 `*.log`，所以记录使用 `.txt`。
 
 ## 正确调用实际接到哪里
 
