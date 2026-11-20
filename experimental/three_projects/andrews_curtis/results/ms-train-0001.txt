@@ -1,0 +1,1 @@
+ms-train-0001: [6, 2, 9, 5, 11] # found by bounded BFS, not the contest sample

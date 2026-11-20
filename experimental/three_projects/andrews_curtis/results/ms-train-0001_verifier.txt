@@ -1,0 +1,12 @@
+{
+  "accepted": true,
+  "results": [
+    {
+      "certificate_hash": "sha256:8e036890afb4069ae833e5c0984ca13e3bce1b994237f0de3529e3ef8c2affe2",
+      "challenge_id": "ms-train-0001",
+      "length": 5,
+      "ok": true,
+      "work": 28
+    }
+  ]
+}

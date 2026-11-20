@@ -1,0 +1,8 @@
+[package]
+name = "usage-audit-caller"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+s-wind-sim = { path = "../../.." }

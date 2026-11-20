@@ -1,0 +1,17 @@
+[
+  {
+    "id": "discovered_0",
+    "status": "PendingReview",
+    "formula": "f(n) = -7·n + 59 [arithmetic]"
+  },
+  {
+    "id": "discovered_1",
+    "status": "PendingReview",
+    "formula": "s[n+1] = 7/3·s[n] + -209/3 [linear recurrence, s[1]=50]"
+  },
+  {
+    "id": "discovered_2",
+    "status": "PendingReview",
+    "formula": "s[n+1] = 8/5·s[n] + -169/5 [linear recurrence, s[1]=48]"
+  }
+]

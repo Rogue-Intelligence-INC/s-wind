@@ -1,0 +1,92 @@
+{
+  "uploaded_to_sair": false,
+  "repo": "https://github.com/SAIRcompetition/Andrews-Curtis",
+  "repo_commit": "a0fd6e6f52d82c93ccc06ab91d81e8fa3678256e",
+  "engine": "official verifier replay and move function; search code is this adapter",
+  "swind_called": false,
+  "replay_public_sample": {
+    "submission": "competition/examples/sample_submission.txt",
+    "moves_ac": [
+      6,
+      4,
+      2,
+      9,
+      1,
+      4,
+      1
+    ],
+    "challenge": "ms-train-0160",
+    "verifier_returncode": 0,
+    "accepted": true,
+    "status": "\u590d\u73b0\u516c\u5f00\u8bad\u7ec3\u89e3",
+    "contest_win": false
+  },
+  "search_training_ms_train_0001": {
+    "initial_relators": [
+      [
+        -1,
+        2,
+        1,
+        -2,
+        -2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "search": {
+      "moves": [
+        6,
+        2,
+        9,
+        5,
+        11
+      ],
+      "nodes": 49420,
+      "seconds": 1.0042541230000097,
+      "seen": 307094,
+      "stop": "solved",
+      "max_depth": 8,
+      "max_total_relator_length": 24,
+      "max_nodes": 2000000
+    },
+    "verifier_returncode": 0,
+    "accepted": true,
+    "contest_win": false,
+    "completeness": "Incomplete whenever stop != solved, and even a solution is only one path under the depth and length caps."
+  },
+  "search_scored_ac_08491": {
+    "initial_relators": [
+      [
+        -2,
+        -1
+      ],
+      [
+        -2,
+        -2,
+        -1,
+        -1,
+        2,
+        2,
+        1
+      ]
+    ],
+    "why_this_id": "shortest total relator length among ac-* rows in the official manifest",
+    "search": {
+      "moves": null,
+      "nodes": 152767,
+      "seconds": 0.6163692879999871,
+      "seen": 152767,
+      "stop": "exhausted",
+      "max_depth": 6,
+      "max_total_relator_length": 20,
+      "max_nodes": 1500000,
+      "seconds_budget": 180.0
+    },
+    "verifier_returncode": null,
+    "accepted": false,
+    "contest_win": false,
+    "completeness": "Depth, word-length and node caps are below the contest limits. Failure is not evidence that the presentation is AC-nontrivial."
+  }
+}

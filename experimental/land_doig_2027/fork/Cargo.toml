@@ -1,0 +1,9 @@
+[package]
+name = "swind-explore-lowered"
+version = "0.0.0"
+edition = "2021"
+publish = false
+description = "Experimental copy of src/bin/swind.rs. Archives DescriptiveOnly fits. Does not replace the product binary."
+
+[dependencies]
+s-wind-sim = { path = "../../.." }
