@@ -101,10 +101,47 @@ CLI 的 0.1483 是 820 个样本中的最小正均值。源码在目标大于 0 
 
 ## 未完成
 
-- 未运行 `test_search_alpha_inv` / `search_quadratic`。
+- 未运行 `test_search_alpha_inv` / `search_quadratic`。本轮没有再加 `search_linear` 小盒。
 - 未运行 `batch_optimizer`，没有 A1 钢材公式的实测值。
 - 没有一组输入在本次把 `closure_reached` 置为 true。
-- 其他助手的既往调用记录尚未并入。这里不推断那些记录。
+- Iggy 转述的 Studio 多阶段项目见下一节。远端树里没有那些文件。用户本机没有被访问，所以本机是否另有一份不能从这次核对里得出。
+
+## 工业例子正对照（2026-11-21 03:55 北京时间）
+
+上一节的系数搜索和 `swind optimize --project A1` 不是这条正对照。本轮跑的是远端已经存在的 `examples/industry_beam_optimize.rs`。它由 `c21cac6`（2026-10-30 03:44 北京时间）加入，提交说明写的是 GB 50017 × GB/T 11263、120 个组合、最优 `32663/700`。`origin/main` 就是这个提交。本分支产品历史没有比它更新的 `src/`。
+
+### 远端没有 Iggy 记录里的那套 pipeline
+
+`git ls-tree` 在 `origin/main` 和本分支上都没有 `pipelines/`。`*_optimize.rs` 只有 `examples/industry_beam_optimize.rs`。没有锅炉、冷库、泵管、电池、光储的例子、manifest，也没有“加载全部 KB → 要求 Closure 和 OPTIMUM → 基线 → 敏感性 → verified/selfloop/full/Voyager → fit → KB → 证据/PDF”的运行器。`ARCHITECTURE.md` 把唯一支持的用户入口写成 `swind explore`。`src/symbolic/epr.rs` 最后一次提交是 `836fbff`（2026-02-05 16:52 北京时间）。2026-11-16 的 `epr.rs` 修复不在这两个远端头上。这些是远端缺口，不是对用户本机目录的判断。本机未访问。Iggy 的四项工业结果和光储 1275300 组合仍是待核转述：远端没有实参和日志可重放。
+
+### 实际命令
+
+```bash
+cd /workspace
+cargo run --release --example industry_beam_optimize --offline
+python3 experimental/usage_audit/beam_independent_check.py
+cargo run --release --example industry_beam_optimize --offline -- --span 4000 --spacing 2000
+```
+
+cargo 1.83.0。完整程序输出在 `logs/industry_beam_run.txt`。`Cargo.toml` 只显式登记了 `knowledge_demo`，上面第一条命令仍然编译并运行了 `industry_beam_optimize`。
+
+程序输出：10 根截面的质量/Wx 自检都通过断言。`Exhaustive search: 120 combinations, 71 feasible`。第 1 名 `HN300x150 Q355 spacing=3500mm`，打印 `46.6614 CNY/m2`，精确值 `EPR { numerator limbs [32663], denominator limbs [700] }`。后四名打印成本 52.50、54.44、55.62、60.00，应力比/挠度比/剪应力比见日志。
+
+`main` 不读参数。带 `--span 4000 --spacing 2000` 的第二次运行仍是 120/71 和 `32663/700`。这个例子没有配置入口，所以没有做成参数变体，也没有改例子或 `src`。
+
+### 调用链里各部分做什么
+
+搜索是例子自己的三重循环：10 根截面 × 2 个钢号 × 6 个间距（`examples/industry_beam_optimize.rs:74-106`）。排序用 EPR 的 `Ord`（同文件 107 行）。`OPTIMUM` 是排完后的 `println`（114-116 行）。库只提供 `s_wind::EPR`（第 8 行）的运算和比较。没有 `Fate`、`explore`、`AlgebraicSearchEngine`、`KnowledgeBase`、Voyager。`knowledge_base/*.json` 存在，这个例子不读它们。约束、目标、截面表都写在例子里。
+
+README 里的 `CLOSURE(E)` 和 `src/fate.rs:2774-2779` 的 `closure_reached` 属于信号变换。这次运行没有生成那份数据，也没有证据文件或 PDF。打印出来的“proven by exhaustion”指的是这 120 项声明空间被循环走完。
+
+### 独立复核
+
+`beam_independent_check.py` 用 `fractions.Fraction` 重数同一张表和同一组公式，不调用库。结果 `examined=120 feasible=71`，最优 `32663/700`，与 EPR 分子分母一致。前五名的 `sigma/f`、`defl/lim`、`tau/fv` 与程序打印的三位小数一致，精确成本依次为 `32663/700`、`105/2`、`32663/600`、`445/8`、`60/1`。这次核对通过的是这个声明空间上的最小成本，不是 Iggy 记录里的关卡成功。`ARCHITECTURE.md` 仍记载 `divmod` 在 `[2^127, 2^128)` 有已知错误；本例的成本分数远小于该区间，独立分数复核与 EPR 打印一致。
+
+### 和只跑 explore 的差别
+
+这条例子不调用 `swind explore`。先前 Land–Doig、Golomb 长度走的是数列拟合；这个例子走的是手写目录穷举加 EPR 比较。两条路的输出不能互相代替。它也不是 Iggy 描述的多阶段 pipeline：KB 没有参加约束或目标，Closure 没有生成，verified/selfloop/full/Voyager 没有运行。就远端现有的这个例子而言，声明空间被穷尽，最优分数被独立复核通过。Studio 那条闭环在这个远端上没有入口可跑。
 
 复现：
 
@@ -117,4 +154,9 @@ cd /tmp
 /workspace/target/release/swind explore "1/2,1,3/2" --mode loop
 /workspace/target/release/swind explore "1,1,2,3,5" --mode full
 /workspace/target/release/swind optimize --project A1
+
+# 工业例子。A1 不是这条正对照。
+cd /workspace
+cargo run --release --example industry_beam_optimize --offline
+python3 experimental/usage_audit/beam_independent_check.py
 ```

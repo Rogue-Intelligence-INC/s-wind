@@ -1,0 +1,48 @@
+recorded_utc=2026-11-20T19:55:36Z
+beijing=2026-11-21 03:55 UTC+8
+head=af34d2fcafe31c2222d9bd3a83f0d235635a306e
+origin_main=c21cac63cd059073b4d121f007de93375ca843bb
+origin_main_time=2026-10-30 03:44:34 +0800
+cargo=1.83.0
+command=cargo run --release --example industry_beam_optimize --offline
+cwd=/workspace
+example=examples/industry_beam_optimize.rs
+added_in=c21cac6
+
+data-check HN150x75: mass dev 0.31%, Wx dev 0.00%
+data-check HN175x90: mass dev 0.08%, Wx dev 0.41%
+data-check HN200x100: mass dev 0.27%, Wx dev 0.00%
+data-check HN250x125: mass dev 0.09%, Wx dev 0.12%
+data-check HN300x150: mass dev 0.06%, Wx dev 0.07%
+data-check HN350x175: mass dev 0.05%, Wx dev 0.11%
+data-check HN400x200: mass dev 0.05%, Wx dev 0.42%
+data-check HN450x200: mass dev 0.04%, Wx dev 0.07%
+data-check HN500x200: mass dev 0.05%, Wx dev 0.21%
+data-check HN600x200: mass dev 0.00%, Wx dev 0.13%
+
+Exhaustive search: 120 combinations, 71 feasible
+#1 HN300x150 Q355 spacing=3500mm cost=46.66 sigma/f=0.832 defl/lim=0.928 tau/fv=0.266
+#2 HN350x175 Q235 spacing=4000mm cost=52.50 sigma/f=0.832 defl/lim=0.560 tau/fv=0.341
+#3 HN300x150 Q355 spacing=3000mm cost=54.44 sigma/f=0.715 defl/lim=0.798 tau/fv=0.229
+#4 HN350x175 Q355 spacing=4000mm cost=55.62 sigma/f=0.586 defl/lim=0.560 tau/fv=0.244
+#5 HN350x175 Q235 spacing=3500mm cost=60.00 sigma/f=0.730 defl/lim=0.492 tau/fv=0.299
+OPTIMUM exact = 32663/700  (printed 46.6614 CNY/m2)
+
+argv_probe=cargo run --release --example industry_beam_optimize --offline -- --span 4000 --spacing 2000
+argv_probe_result=same 120/71 and same 32663/700; main() does not read arguments
+
+independent=python3 experimental/usage_audit/beam_independent_check.py
+independent_result=examined=120 feasible=71
+#1 32663/700 sigma/f=0.832 defl/lim=0.928 tau/fv=0.266
+#2 105/2
+#3 32663/600
+#4 445/8
+#5 60/1
+optimum exact=32663/700
+match=exact fraction and the five printed ratios to 3 decimals
+
+absent_on_origin_main_and_this_branch=pipelines/
+only_optimize_rs=examples/industry_beam_optimize.rs
+epr_rs_last_commit=836fbff 2026-02-05 16:52:26 +0800
+nov16_epr_fix_not_in_this_remote=true
+user_machine_not_accessed=true
